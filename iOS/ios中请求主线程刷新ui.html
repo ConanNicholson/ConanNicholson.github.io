@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>iOS中请求主线程刷新UI - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;iOS中请求主线程刷新UI</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">iOS中请求主线程刷新UI</div>
+  <div id="content">
+  <p>iOS中只有主线程 才能立即刷新UI。如果是通过侦听异步消息，触发回调函数，或者调用异步方法，请求刷新UI，都会产生线程阻塞和延迟的问题。</p>
+<p>实现方法：</p>
+<div class="hlcode"><pre><span class="k">if</span> <span class="p">([</span><span class="n">NSThread</span> <span class="n">isMainThread</span><span class="p">]){</span>  
+    <span class="c1">//在主线程刷新</span>
+
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>  
+    <span class="n">dispatch_sync</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>  
+        <span class="c1">//返回主线程刷新</span>
+
+    <span class="p">});</span>  
+<span class="p">}</span> 
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
