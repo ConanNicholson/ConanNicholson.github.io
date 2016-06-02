@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>GCD使用 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;GCD使用</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">GCD使用</div>
+  <div id="content">
+  <p><strong>单例</strong></p>
+<p>dispatch_once_t必须是全局或static变量。</p>
+<div class="hlcode"><pre><span class="c1">//静态变量，保证只有一份实例，才能确保只执行一次</span>
+<span class="k">static</span> <span class="n">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
+<span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+   <span class="c1">//单例代码</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p><strong>创建队列</strong></p>
+<div class="hlcode"><pre><span class="c1">//串行队列</span>
+<span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">&quot;com.example.MyQueue&quot;</span><span class="p">,</span> <span class="no">DISPATCH_QUEUE_SERIAL</span><span class="p">);</span>
+
+<span class="c1">//并行队列</span>
+<span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">&quot;com.example.MyQueue&quot;</span><span class="p">,</span> <span class="no">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
+</pre></div>
+
+
+<p><strong>dispatch_after是延迟提交，不是延迟运行</strong></p>
+<p>dispatch_after只是延时提交block，并不是延时后立即执行。</p>
+<p><strong>dispatch_suspend != 立即停止队列的运行</strong></p>
+<p>dispatch_suspend，dispatch_resume提供了“挂起、恢复”队列的功能，简单来说，就是可以暂停、恢复队列上的任务。但是这里的“挂起”，并不能保证可以立即停止队列上正在运行的block。</p>
+<p><strong>“同步”的dispatch_apply</strong></p>
+<p>dispatch_apply的作用是在一个队列（串行或并行）上“运行”多次block，其实就是简化了用循环去向队列依次添加block任务。</p>
+<p>dispatch_apply确实会“等待”其所有的循环运行完毕才往下执行。</p>
+<ul>
+<li>
+<p>GCD导致的死锁</p>
+</li>
+<li>
+<p>dispatch_sync嵌套使用。</p>
+</li>
+<li>dispatch_apply嵌套使用。</li>
+</ul>
+<p><strong>灵活使用dispatch_group</strong></p>
+<p>很多时候我们需要等待一系列任务（block）执行完成，然后再做一些收尾的工作。如果是有序的任务，可以分步骤完成的，直接使用串行队列就行。但是如果是一系列并行执行的任务呢？这个时候，就需要dispatch_group。</p>
+<p>dispatch_group的一般使用步骤：</p>
+<ol>
+<li>创建dispatch_group_t</li>
+<li>添加任务（block）</li>
+<li>添加结束任务（如清理操作、通知UI等）</li>
+</ol>
+<p>添加任务可以分为以下两种情况：</p>
+<ol>
+<li>自己创建队列：使用dispatch_group_async。</li>
+<li>无法直接使用队列变量（如使用AFNetworking添加异步任务）：使用dispatch_group_enter，dispatch_group_leave。</li>
+</ol>
+<p>自己创建队列时，当然就用dispatch_group_async函数:</p>
+<div class="hlcode"><pre><span class="c1">//省去创建group、queue代码。。。</span>
+
+<span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+    <span class="c1">//Do you work...</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>当你无法直接使用队列变量时:</p>
+<div class="hlcode"><pre><span class="n">AFHTTPRequestOperationManager</span> <span class="o">*</span><span class="n">manager</span> <span class="o">=</span> <span class="p">[</span><span class="n">AFHTTPRequestOperationManager</span> <span class="n">manager</span><span class="p">];</span>
+
+<span class="c1">//Enter group</span>
+<span class="n">dispatch_group_enter</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+<span class="p">[</span><span class="n">manager</span> <span class="n">GET</span><span class="o">:</span><span class="s">@&quot;http://www.baidu.com&quot;</span> <span class="n">parameters</span><span class="o">:</span><span class="nb">nil</span> <span class="n">success</span><span class="o">:^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="kt">id</span> <span class="n">responseObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Deal with result...</span>
+
+    <span class="c1">//Leave group</span>
+    <span class="n">dispatch_group_leave</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+<span class="p">}</span>    <span class="n">failure</span><span class="o">:^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Deal with error...</span>
+
+    <span class="c1">//Leave group</span>
+    <span class="n">dispatch_group_leave</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="c1">//More request...</span>
+</pre></div>
+
+
+<p>添加结束任务也可以分为两种情况，如下：</p>
+<ol>
+<li>在当前线程阻塞的同步等待：dispatch_group_wait。</li>
+<li>
+<p>添加一个异步执行的任务作为结束任务：dispatch_group_notify</p>
+</li>
+<li>
+<p>使用dispatch_barrier_async,dispatch_barrier_sync的注意事项</p>
+</li>
+</ol>
+<p>dispatch_barrier_async的作用就是向某个队列插入一个block，当目前正在执行的block运行完成后，阻塞这个block后面添加的block，只运行这个block直到完成，然后再继续后续的任务。</p>
+<p>值得注意的是：</p>
+<ol>
+<li>dispatchbarrier(a)sync只在自己创建的并发队列上有效，在全局(Global)并发队列、串行队列上，效果跟dispatch_(a)sync效果一样。</li>
+<li>
+<p>在串行队列上跟dispatch_(a)sync效果一样，那就要小心别死锁！</p>
+</li>
+<li>
+<p>dispatch_set_context与dispatch_set_finalizer_f的配合使用</p>
+</li>
+</ol>
+<p>dispatch_set_context可以为队列添加上下文数据，但是因为GCD是C语言接口形式的，所以其context参数类型是“void *”。也就是说，我们创建context时有如下几种选择：</p>
+<ol>
+<li>用C语言的malloc创建context数据。</li>
+<li>用C++的new创建类对象。</li>
+<li>用Objective-C的对象，但是要用__bridge等关键字转为Core Foundation对象。</li>
+</ol>
+<p>以上所有创建context的方法都有一个必须的要求，就是都要释放内存！，无论是用free、delete还是CF的CFRelease，我们都要确保在队列不用的时候，释放context的内存，否则就会造成内存泄露。</p>
+<h2 id="_1">原文</h2>
+<p><a href="http://tutuge.me/2015/04/03/something-about-gcd/">GCD使用经验与技巧浅谈</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

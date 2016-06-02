@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>cocoapods的使用方法记录 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;cocoapods的使用方法记录</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">cocoapods的使用方法记录</div>
+  <div id="content">
+  <p>删除源</p>
+<div class="hlcode"><pre><span class="n">gem</span> <span class="n">sources</span> <span class="o">--</span><span class="n">remove</span> <span class="err">源地址</span>
+</pre></div>
+
+
+<p>添加源</p>
+<div class="hlcode"><pre><span class="n">gem</span> <span class="n">source</span> <span class="o">-</span><span class="n">a</span> <span class="n">https</span><span class="o">:</span><span class="c1">//gems.ruby-china.org</span>
+</pre></div>
+
+
+<p>查看源</p>
+<div class="hlcode"><pre><span class="n">gem</span> <span class="n">source</span>
+</pre></div>
+
+
+<p>安装cocoapods</p>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">coocoapods</span>
+</pre></div>
+
+
+<p>初始化cocoapods</p>
+<div class="hlcode"><pre><span class="n">pod</span> <span class="n">setup</span>
+</pre></div>
+
+
+<p>到项目目录初始化Podfile文件</p>
+<div class="hlcode"><pre><span class="n">pod</span> <span class="n">init</span>
+</pre></div>
+
+
+<p>不更新本地库信息进行安装</p>
+<div class="hlcode"><pre><span class="n">pod</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">repo</span><span class="o">-</span><span class="n">updateorpod</span> <span class="n">install</span>
+</pre></div>
+
+
+<p>升级库</p>
+<div class="hlcode"><pre><span class="n">pod</span> <span class="n">repo</span> <span class="n">update</span>
+</pre></div>
+
+
+<p>修改了Podfile文件，更新库</p>
+<div class="hlcode"><pre><span class="n">pod</span> <span class="n">update</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">repo</span><span class="o">-</span><span class="n">updateorpod</span> <span class="n">update</span>
+</pre></div>
+
+
+<p>更新gem</p>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">gem</span> <span class="n">update</span>
+</pre></div>
+
+
+<p>版本</p>
+<div class="hlcode"><pre><span class="n">pod</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+
+
+<p>Podfile文件一般格式:</p>
+<div class="hlcode"><pre><span class="n">platform</span> <span class="o">:</span><span class="n">ios</span><span class="o">,</span> <span class="s1">&#39;8.0&#39;</span>
+<span class="n">use_frameworks</span><span class="o">!</span>
+<span class="n">target</span> <span class="s1">&#39;DecorationBus&#39;</span> <span class="k">do</span>
+<span class="err">#此处添加库</span>   
+<span class="n">end</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>block循环引用 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;block循环引用</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">block循环引用</div>
+  <div id="content">
+  <p>__weak是所有权修饰符,__weak本身是可以避免循环引用的问题的,但是其会导致外部对象释放之后,block内部也访问不到对象的问题,我们可以通过在block内部声明一个__strong的变量来指向weakObj,使外部既能在block内部保持住又能避免循环引用。</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
