@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>Masonry使用技巧 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;Masonry使用技巧</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Masonry使用技巧</div>
+  <div id="content">
+  <h2 id="_1">一些基本概念</h2>
+<ul>
+<li>multipler属性表示约束值为约束对象的百分比，在Masonry里有对应的multipliedBy函数</li>
+</ul>
+<p>宽度为superView宽度的20%</p>
+<div class="hlcode"><pre><span class="n">make</span><span class="p">.</span><span class="n">width</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">superView</span><span class="p">.</span><span class="n">mas_width</span><span class="p">).</span><span class="n">multipliedBy</span><span class="p">(</span><span class="mf">0.2</span><span class="p">);</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p>AutoLayout下UILabel设置多行计算需要设置preferredMaxLayoutWidth</p>
+</li>
+<li>
+<p>preferredMaxLayoutWidth用来制定最大的宽，一般用在多行的UILabel中</p>
+</li>
+<li>
+<p>systemLayoutSizeFittingSize方法能够获得view的高度和宽度</p>
+</li>
+<li>
+<p>两个很有用的属性，topLayoutGuide和bottomLayoutGuide，这个两个主要是方便获取UINavigationController和UITabBarController的头部视图区域和底部视图区域。</p>
+</li>
+</ul>
+<p>Masonry直接支持这个属性</p>
+<div class="hlcode"><pre><span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">mas_topLayoutGuide</span><span class="p">);</span>
+</pre></div>
+
+
+<h2 id="autolayout">AutoLayout关于更新的几个方法的区别</h2>
+<ul>
+<li>setNeedsLayout：告知页面需要更新，但是不会立刻开始更新。执行后会立刻调用layoutSubviews。</li>
+<li>layoutIfNeeded：告知页面布局立刻更新。所以一般都会和setNeedsLayout一起使用。如果希望立刻生成新的frame需要调用此方法，利用这点一般布局动画可以在更新布局后直接使用这个方法让动画生效。</li>
+<li>layoutSubviews：系统重写布局</li>
+<li>setNeedsUpdateConstraints：告知需要更新约束，但是不会立刻开始</li>
+<li>updateConstraintsIfNeeded：告知立刻更新约束</li>
+<li>updateConstraints：系统更新约束</li>
+</ul>
+<h2 id="_2">注意事项</h2>
+<ul>
+<li>用mas_makeConstraints的那个view需要在addSubview之后才能用这个方法</li>
+<li>mas_equalTo适用数值元素，equalTo适合多属性的比如
+<em>make.left.and.right.equalTo(self.view)</em></li>
+<li>方法and和with只是为了可读性，返回自身，比如<em>make.left.and.right.equalTo(self.view)</em>和<em>make.left.right.equalTo(self.view)</em>是一样的。</li>
+<li>因为iOS中原点在左上角所以注意使用offset时注意right和bottom用负数。</li>
+</ul>
+<h2 id="_3">基本写法</h2>
+<div class="hlcode"><pre><span class="c1">//相对于父视图边距为10</span>
+<span class="n">UIEdgeInsets</span> <span class="n">padding</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mh">10</span><span class="p">,</span> <span class="mh">10</span><span class="p">,</span> <span class="mh">10</span><span class="p">,</span> <span class="mh">10</span><span class="p">);</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">avatarView</span> <span class="nl">mas_makeConstraints:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">superview</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="k">with</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="n">padding</span><span class="p">.</span><span class="n">top</span><span class="p">);</span> <span class="c1">//with is an optional semantic filler</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">superview</span><span class="p">.</span><span class="n">mas_left</span><span class="p">).</span><span class="k">with</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="n">padding</span><span class="p">.</span><span class="n">left</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">superview</span><span class="p">.</span><span class="n">mas_bottom</span><span class="p">).</span><span class="k">with</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span><span class="n">padding</span><span class="p">.</span><span class="n">bottom</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">superview</span><span class="p">.</span><span class="n">mas_right</span><span class="p">).</span><span class="k">with</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span><span class="n">padding</span><span class="p">.</span><span class="n">right</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="c1">//相对于父视图边距为10简洁写法</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">avatarView</span> <span class="nl">mas_makeConstraints:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">edges</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">superview</span><span class="p">).</span><span class="k">with</span><span class="p">.</span><span class="n">insets</span><span class="p">(</span><span class="n">padding</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="c1">//这两个作用完全一样</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">avatarView</span> <span class="nl">mas_makeConstraints:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">greaterThanOrEqualTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">greaterThanOrEqualTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_left</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="c1">//.equalTo .lessThanOrEqualTo .greaterThanOrEqualTo使用NSNumber</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">avatarView</span> <span class="nl">mas_makeConstraints:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">width</span><span class="p">.</span><span class="n">greaterThanOrEqualTo</span><span class="p">(@</span><span class="mh">200</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">width</span><span class="p">.</span><span class="n">lessThanOrEqualTo</span><span class="p">(@</span><span class="mh">400</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">lessThanOrEqualTo</span><span class="p">(@</span><span class="mh">10</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="c1">//如果不用NSNumber可以用以前的数据结构，只需用mas_equalTo就行</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">avatarView</span> <span class="nl">mas_makeConstraints:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="mh">42</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">height</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="mh">20</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">CGSizeMake</span><span class="p">(</span><span class="mh">50</span><span class="p">,</span> <span class="mh">100</span><span class="p">));</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">edges</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mh">10</span><span class="p">,</span> <span class="mh">0</span><span class="p">,</span> <span class="mh">10</span><span class="p">,</span> <span class="mh">0</span><span class="p">));</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">mas_equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">mas_offset</span><span class="p">(</span><span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mh">10</span><span class="p">,</span> <span class="mh">0</span><span class="p">,</span> <span class="mh">10</span><span class="p">,</span> <span class="mh">0</span><span class="p">));</span>
+<span class="p">}];</span>
+
+<span class="c1">//也可以使用数组</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">avatarView</span> <span class="nl">mas_makeConstraints:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">height</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(@[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_height</span><span class="p">,</span> <span class="n">superview</span><span class="p">.</span><span class="n">mas_height</span><span class="p">]);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">height</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(@[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">,</span> <span class="n">superview</span><span class="p">]);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(@[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">,</span> <span class="p">@</span><span class="mh">100</span><span class="p">,</span> <span class="n">superview</span><span class="p">.</span><span class="n">mas_right</span><span class="p">]);</span>
+<span class="p">}];</span>
+
+<span class="c1">// priority的使用</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">avatarView</span> <span class="nl">mas_makeConstraints:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">greaterThanOrEqualTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_left</span><span class="p">).</span><span class="k">with</span><span class="p">.</span><span class="n">priorityLow</span><span class="p">();</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="k">with</span><span class="p">.</span><span class="k">priority</span><span class="p">(</span><span class="mh">600</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="c1">//同时创建多个约束</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">avatarView</span> <span class="nl">mas_makeConstraints:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//让top,left,bottom,right都和self.view一样</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">edges</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
+    <span class="c1">//edges</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">edges</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">insets</span><span class="p">(</span><span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mh">5</span><span class="p">,</span> <span class="mh">10</span><span class="p">,</span> <span class="mh">15</span><span class="p">,</span> <span class="mh">20</span><span class="p">));</span>
+    <span class="c1">//size</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">greaterThanOrEqualTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">superview</span><span class="p">).</span><span class="n">sizeOffset</span><span class="p">(</span><span class="n">CGSizeMake</span><span class="p">(</span><span class="mh">100</span><span class="p">,</span> <span class="o">-</span><span class="mh">50</span><span class="p">));</span>
+    <span class="c1">//center</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">centerOffset</span><span class="p">(</span><span class="n">CGPointMake</span><span class="p">(</span><span class="o">-</span><span class="mh">5</span><span class="p">,</span> <span class="mh">10</span><span class="p">));</span>
+    <span class="c1">//chain</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="k">and</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
+<span class="p">}];</span>
+</pre></div>
+
+
+<h2 id="uitableview">计算UITableView的变高高度</h2>
+<p>主要是UILabel的高度会有变化，所以这里主要是说说label变化时如何处理，设置UILabel的时候注意要设置preferredMaxLayoutWidth这个宽度，还有ContentHuggingPriority为UILayoutPriorityRequried</p>
+<div class="hlcode"><pre><span class="n">CGFloat</span> <span class="n">maxWidth</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIScreen</span> <span class="n">mainScreen</span><span class="p">].</span><span class="n">bounds</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="n">textLabel</span> <span class="o">=</span> <span class="p">[</span><span class="n">UILabel</span> <span class="n">new</span><span class="p">];</span>
+<span class="n">textLabel</span><span class="p">.</span><span class="n">numberOfLines</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">textLabel</span><span class="p">.</span><span class="n">preferredMaxLayoutWidth</span> <span class="o">=</span> <span class="n">maxWidth</span><span class="p">;</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">contentView</span> <span class="n">addSubview</span><span class="o">:</span><span class="n">textLabel</span><span class="p">];</span>
+
+<span class="p">[</span><span class="n">textLabel</span> <span class="n">mas_makeConstraints</span><span class="o">:^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">statusView</span><span class="p">.</span><span class="n">mas_bottom</span><span class="p">).</span><span class="n">with</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">contentView</span><span class="p">).</span><span class="n">with</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">contentView</span><span class="p">).</span><span class="n">with</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">);</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">contentView</span><span class="p">).</span><span class="n">with</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="p">[</span><span class="n">_contentLabel</span> <span class="n">setContentHuggingPriority</span><span class="o">:</span><span class="n">UILayoutPriorityRequired</span> <span class="n">forAxis</span><span class="o">:</span><span class="n">UILayoutConstraintAxisVertical</span><span class="p">];</span>
+</pre></div>
+
+
+<p>如果版本支持最低版本为iOS 8以上的话可以直接利用UITableViewAutomaticDimension在tableview的heightForRowAtIndexPath直接返回即可。</p>
+<div class="hlcode"><pre><span class="n">tableView</span><span class="p">.</span><span class="n">rowHeight</span> <span class="o">=</span> <span class="n">UITableViewAutomaticDimension</span><span class="p">;</span>
+<span class="n">tableView</span><span class="p">.</span><span class="n">estimatedRowHeight</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span> <span class="c1">//减少第一次计算量，iOS7后支持</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="n">tableView</span><span class="o">:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="n">heightForRowAtIndexPath</span><span class="o">:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="n">indexPath</span> <span class="p">{</span>
+    <span class="c1">// 只用返回这个！</span>
+    <span class="k">return</span> <span class="n">UITableViewAutomaticDimension</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>但如果需要兼容iOS 8之前版本的话，就要回到老路子上了，主要是用systemLayoutSizeFittingSize来取高。步骤是先在数据model中添加一个height的属性用来缓存高，然后在table view的heightForRowAtIndexPath代理里static一个只初始化一次的Cell实例，然后根据model内容填充数据，最后根据cell的contentView的systemLayoutSizeFittingSize的方法获取到cell的高。具体代码如下</p>
+<div class="hlcode"><pre><span class="c1">//在model中添加属性缓存高度</span>
+<span class="k">@interface</span> <span class="nc">DataModel</span> : <span class="nc">NSObject</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">text</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">assign</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">CGFloat</span> <span class="n">cellHeight</span><span class="p">;</span> <span class="c1">//缓存高度</span>
+<span class="k">@end</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="n">tableView</span><span class="o">:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="n">tableView</span> <span class="n">heightForRowAtIndexPath</span><span class="o">:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="n">indexPath</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="n">CustomCell</span> <span class="o">*</span><span class="n">cell</span><span class="p">;</span>
+    <span class="c1">//只初始化一次cell</span>
+    <span class="k">static</span> <span class="kt">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
+    <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="n">dequeueReusableCellWithIdentifier</span><span class="o">:</span><span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">CustomCell</span> <span class="n">class</span><span class="p">])];</span>
+    <span class="p">});</span>
+    <span class="n">DataModel</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">dataArray</span><span class="p">[(</span><span class="n">NSUInteger</span><span class="p">)</span> <span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">cell</span> <span class="n">makeupData</span><span class="o">:</span><span class="n">model</span><span class="p">];</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">cellHeight</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//使用systemLayoutSizeFittingSize获取高度</span>
+        <span class="n">model</span><span class="p">.</span><span class="n">cellHeight</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell</span><span class="p">.</span><span class="n">contentView</span> <span class="n">systemLayoutSizeFittingSize</span><span class="o">:</span><span class="n">UILayoutFittingCompressedSize</span><span class="p">].</span><span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">model</span><span class="p">.</span><span class="n">cellHeight</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2 id="_4">动画</h2>
+<p>因为布局约束就是要脱离frame这种表达方式的，可是动画是需要根据这个来执行，这里面就会有些矛盾，不过根据前面说到的布局约束的原理，在某个时刻约束也是会被还原成frame使视图显示，这个时刻可以通过layoutIfNeeded这个方法来进行控制。具体代码如下</p>
+<div class="hlcode"><pre><span class="p">[</span><span class="n">aniView</span> <span class="n">mas_makeConstraints</span><span class="o">:^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="p">[</span><span class="n">aniView</span> <span class="n">mas_updateConstraints</span><span class="o">:^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+<span class="p">}];</span>
+
+<span class="p">[</span><span class="n">UIView</span> <span class="n">animateWithDuration</span><span class="o">:</span><span class="mi">3</span> <span class="n">animations</span><span class="o">:^</span><span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="n">layoutIfNeeded</span><span class="p">];</span>
+<span class="p">}];</span>
+</pre></div>
+
+
+<ul>
+<li>原文</li>
+</ul>
+<p><a href="http://www.starming.com/index.php?v=index&amp;view=81">AutoLayout框架Masonry使用心得</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>OC中NSString的一些用法 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;OC中NSString的一些用法</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">OC中NSString的一些用法</div>
+  <div id="content">
+  <p>将NSArray集合拼成一个路径。</p>
+<div class="hlcode"><pre><span class="p">[</span><span class="n">NSString</span> <span class="n">pathWithComponents</span><span class="o">:</span><span class="n">arry</span><span class="p">];</span>
+</pre></div>
+
+
+<p>把路径转换成NSSArray集合。</p>
+<div class="hlcode"><pre><span class="p">[</span><span class="n">str1</span> <span class="n">pathComponents</span><span class="p">];</span>
+</pre></div>
+
+
+<p>是否是绝对路径用／开头判断。</p>
+<div class="hlcode"><pre><span class="p">[</span><span class="n">str1</span> <span class="n">isAbsolutePath</span><span class="p">];</span>
+</pre></div>
+
+
+<p>获得最后一个文件。</p>
+<div class="hlcode"><pre><span class="p">[</span><span class="n">str1</span> <span class="n">lastPathComponent</span><span class="p">];</span>
+</pre></div>
+
+
+<p>删除最后一个目录。</p>
+<div class="hlcode"><pre><span class="p">[</span><span class="n">str1</span>  <span class="n">stringByDeletingLastPathComponent</span><span class="p">];</span>
+</pre></div>
+
+
+<p>追加文件名。</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
