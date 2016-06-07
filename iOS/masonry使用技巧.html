@@ -194,8 +194,8 @@
 <h2 id="_4">动画</h2>
 <p>因为布局约束就是要脱离frame这种表达方式的，可是动画是需要根据这个来执行，这里面就会有些矛盾，不过根据前面说到的布局约束的原理，在某个时刻约束也是会被还原成frame使视图显示，这个时刻可以通过layoutIfNeeded这个方法来进行控制。具体代码如下</p>
 <div class="hlcode"><pre><span class="p">[</span><span class="n">aniView</span> <span class="n">mas_makeConstraints</span><span class="o">:^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<span class="p">}];</span>
+<span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">make</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">);</span>        <span class="p">}];</span>
 
 <span class="p">[</span><span class="n">aniView</span> <span class="n">mas_updateConstraints</span><span class="o">:^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
@@ -207,6 +207,7 @@
 </pre></div>
 
 
+<p>自动布局动画与手动布局动画效果有出入，手动布局写动画效果更好。</p>
 <ul>
 <li>原文</li>
 </ul>
