@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>用scrollview实现轮播图 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;用scrollview实现轮播图</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">用scrollview实现轮播图</div>
+  <div id="content">
+  <h2 id="_1">原理说明</h2>
+<p>将最后一张放在第一的位置，将第一张放在最后的位置。当到最后的位置的时候，立即调到真正第一张的位置，因为没有动画效果并且是相同的图片所以看不出位置变化效果。首位原理相同。其他位置运用动画顺序播放。</p>
+<h2 id="_2">代码演示</h2>
+<p>添加最后一个元素</p>
+<div class="hlcode"><pre><span class="n">UIColor</span> <span class="o">*</span><span class="n">lastItem</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span> <span class="n">lastObject</span><span class="p">];</span>
+        <span class="n">itemView</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithFrame</span><span class="o">:</span><span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_WIDTH</span><span class="p">)];</span>
+        <span class="n">itemView</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="n">lastItem</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">scrollView</span> <span class="n">addSubview</span><span class="o">:</span><span class="n">itemView</span><span class="p">];</span>
+</pre></div>
+
+
+<p>添加第一个元素</p>
+<div class="hlcode"><pre><span class="n">UIColor</span> <span class="o">*</span><span class="n">firstItem</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span> <span class="n">firstObject</span><span class="p">];</span>
+        <span class="n">itemView</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithFrame</span><span class="o">:</span><span class="n">CGRectMake</span><span class="p">((</span><span class="n">itemCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_WIDTH</span><span class="p">)];</span>
+        <span class="n">itemView</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="n">firstItem</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">scrollView</span> <span class="n">addSubview</span><span class="o">:</span><span class="n">itemView</span><span class="p">];</span>
+</pre></div>
+
+
+<p>设置contentSize</p>
+<div class="hlcode"><pre>        <span class="n">self</span><span class="p">.</span><span class="n">scrollView</span><span class="p">.</span><span class="n">contentSize</span> <span class="o">=</span> <span class="n">CGSizeMake</span><span class="p">((</span><span class="n">itemCount</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_WIDTH</span><span class="p">)</span>
+</pre></div>
+
+
+<p>contentOffset从第二个位置开始</p>
+<div class="hlcode"><pre>        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">scrollView</span> <span class="n">setContentOffset</span><span class="o">:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="n">animated</span><span class="o">:</span><span class="n">NO</span><span class="p">];</span>
+</pre></div>
+
+
+<p>定时器执行翻页方法</p>
+<div class="hlcode"><pre><span class="n">NSInteger</span> <span class="n">page</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">pageControl</span><span class="p">.</span><span class="n">currentPage</span><span class="p">;</span>
+    <span class="n">page</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">scrollView</span> <span class="n">setContentOffset</span><span class="o">:</span><span class="n">CGPointMake</span><span class="p">((</span><span class="n">page</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="n">animated</span><span class="o">:</span><span class="n">YES</span><span class="p">];</span>
+</pre></div>
+
+
+<p>下面是操作scrollview的代理方法</p>
+<p>在scrollViewDidScroll方法设置页码</p>
+<div class="hlcode"><pre><span class="kt">int</span> <span class="n">page</span> <span class="o">=</span> <span class="n">scrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">SCREEN_WIDTH</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">pageControl</span><span class="p">.</span><span class="n">currentPage</span> <span class="o">=</span> <span class="o">--</span><span class="n">page</span><span class="p">;</span>
+</pre></div>
+
+
+<p>在scrollViewWillBeginDecelerating拖拽的时候停止定时器。</p>
+<p>在完成拖拽scrollViewDidEndDecelerating方法中开启定时器，并且在首位位置时候做响应的处理。</p>
+<div class="hlcode"><pre><span class="kt">int</span> <span class="n">page</span> <span class="o">=</span> <span class="n">scrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">SCREEN_WIDTH</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">page</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">scrollView</span> <span class="n">setContentOffset</span><span class="o">:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="n">itemCount</span> <span class="o">*</span> <span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="n">animated</span><span class="o">:</span><span class="nb">NO</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">page</span> <span class="o">==</span> <span class="n">itemCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">scrollView</span> <span class="n">setContentOffset</span><span class="o">:</span><span class="n">CGPointMake</span><span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="n">animated</span><span class="o">:</span><span class="nb">NO</span><span class="p">];</span>
+    <span class="p">}</span>
+</pre></div>
+
+
+<p>在自动滚动的时候会执行scrollViewDidEndScrollingAnimation这个方法，和手动滚动一样，首位要做相应的处理。</p>
+<h2 id="_3">其他实现方式</h2>
+<p><a href="http://www.cocoachina.com/ios/20160331/15808.html">高效图片轮播，两个imageView实现</a>:scrollview应用两个imageview实现轮播。</p>
+<p><a href="http://www.2cto.com/kf/201512/455401.html">猫猫学iOS 之广告轮播图，collectionView制作（源码）</a>:利用collectionview实现轮播图。</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

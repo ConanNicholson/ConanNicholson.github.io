@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>动态获取键盘高度 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;动态获取键盘高度</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">动态获取键盘高度</div>
+  <div id="content">
+  <div class="hlcode"><pre><span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">self</span> <span class="n">registerForKeyboardNotifications</span><span class="p">];</span>
+    <span class="n">UITextView</span> <span class="o">*</span><span class="n">tv</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UITextView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithFrame</span><span class="o">:</span><span class="n">CGRectMake</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)];</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="n">addSubview</span><span class="o">:</span><span class="n">tv</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">registerForKeyboardNotifications</span>
+<span class="p">{</span>
+    <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="n">addObserver</span><span class="o">:</span><span class="n">self</span> <span class="n">selector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">keyboardWasShown</span><span class="o">:</span><span class="p">)</span> <span class="n">name</span><span class="o">:</span><span class="n">UIKeyboardDidShowNotification</span> <span class="n">object</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+
+    <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span>  <span class="n">addObserver</span><span class="o">:</span><span class="n">self</span> <span class="n">selector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">keyboardWasHidden</span><span class="o">:</span><span class="p">)</span> <span class="n">name</span><span class="o">:</span><span class="n">UIKeyboardDidHideNotification</span> <span class="n">object</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">keyboardWasShown:</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="p">)</span> <span class="n">notif</span>
+<span class="p">{</span>
+    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">info</span> <span class="o">=</span> <span class="p">[</span><span class="n">notif</span> <span class="n">userInfo</span><span class="p">];</span>
+    <span class="n">NSValue</span> <span class="o">*</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span> <span class="n">objectForKey</span><span class="o">:</span><span class="n">UIKeyboardFrameBeginUserInfoKey</span><span class="p">];</span>
+    <span class="n">CGSize</span> <span class="n">keyboardSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span> <span class="n">CGRectValue</span><span class="p">].</span><span class="n">size</span><span class="p">;</span>
+
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;keyBoard:%f&quot;</span><span class="p">,</span> <span class="n">keyboardSize</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>  <span class="c1">//216</span>
+    <span class="c1">///keyboardWasShown = YES;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">keyboardWasHidden</span><span class="o">:</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="p">)</span> <span class="n">notif</span>
+<span class="p">{</span>
+    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">info</span> <span class="o">=</span> <span class="p">[</span><span class="n">notif</span> <span class="n">userInfo</span><span class="p">];</span>
+
+    <span class="n">NSValue</span> <span class="o">*</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span> <span class="n">objectForKey</span><span class="o">:</span><span class="n">UIKeyboardFrameBeginUserInfoKey</span><span class="p">];</span>
+    <span class="n">CGSize</span> <span class="n">keyboardSize</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span> <span class="n">CGRectValue</span><span class="p">].</span><span class="n">size</span><span class="p">;</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;keyboardWasHidden keyBoard:%f&quot;</span><span class="p">,</span> <span class="n">keyboardSize</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
+    <span class="c1">// keyboardWasShown = NO;</span>
+
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>iOS开发中视频中音频文件的提取方法 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;iOS开发中视频中音频文件的提取方法</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">iOS开发中视频中音频文件的提取方法</div>
+  <div id="content">
+  <p>提取代码如下：</p>
+<div class="hlcode"><pre><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">getAudioFromVideo</span> <span class="p">{</span>
+<span class="kt">float</span> <span class="n">startTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">float</span> <span class="n">endTime</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+<span class="n">NSArray</span> <span class="o">*</span><span class="n">paths</span> <span class="o">=</span> <span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span><span class="n">NSDocumentDirectory</span><span class="p">,</span><span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="nb">YES</span><span class="p">);</span>
+<span class="n">NSString</span> <span class="o">*</span><span class="n">documentsDirectory</span> <span class="o">=</span> <span class="p">[</span><span class="n">paths</span> <span class="n">objectAtIndex</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">NSString</span> <span class="o">*</span><span class="n">audioPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">documentsDirectory</span> <span class="n">stringByAppendingPathComponent</span><span class="o">:</span><span class="s">@&quot;soundOneNew.m4a&quot;</span><span class="p">];</span>
+
+<span class="n">AVAsset</span> <span class="o">*</span><span class="n">myasset</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVAsset</span> <span class="n">assetWithURL</span><span class="o">:</span><span class="p">[[</span><span class="n">NSBundle</span> <span class="n">mainBundle</span><span class="p">]</span> <span class="n">URLForResource</span><span class="o">:</span><span class="s">@&quot;VideoName&quot;</span> <span class="n">withExtension</span><span class="o">:</span><span class="s">@&quot;mp4&quot;</span><span class="p">]];</span>
+
+<span class="n">AVAssetExportSession</span> <span class="o">*</span><span class="n">exportSession</span><span class="o">=</span><span class="p">[</span><span class="n">AVAssetExportSession</span> <span class="n">exportSessionWithAsset</span><span class="o">:</span><span class="n">myasset</span> <span class="n">presetName</span><span class="o">:</span><span class="n">AVAssetExportPresetAppleM4A</span><span class="p">];</span>
+
+<span class="n">exportSession</span><span class="p">.</span><span class="n">outputURL</span><span class="o">=</span><span class="p">[</span><span class="n">NSURL</span> <span class="n">fileURLWithPath</span><span class="o">:</span><span class="n">audioPath</span><span class="p">];</span>
+<span class="n">exportSession</span><span class="p">.</span><span class="n">outputFileType</span><span class="o">=</span><span class="n">AVFileTypeAppleM4A</span><span class="p">;</span>
+
+<span class="n">CMTime</span> <span class="n">vocalStartMarker</span> <span class="o">=</span> <span class="n">CMTimeMake</span><span class="p">((</span><span class="kt">int</span><span class="p">)(</span><span class="n">floor</span><span class="p">(</span><span class="n">startTime</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)),</span> <span class="mi">100</span><span class="p">);</span>
+<span class="n">CMTime</span> <span class="n">vocalEndMarker</span> <span class="o">=</span> <span class="n">CMTimeMake</span><span class="p">((</span><span class="kt">int</span><span class="p">)(</span><span class="n">ceil</span><span class="p">(</span><span class="n">endTime</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)),</span> <span class="mi">100</span><span class="p">);</span>
+
+<span class="n">CMTimeRange</span> <span class="n">exportTimeRange</span> <span class="o">=</span> <span class="n">CMTimeRangeFromTimeToTime</span><span class="p">(</span><span class="n">vocalStartMarker</span><span class="p">,</span> <span class="n">vocalEndMarker</span><span class="p">);</span>
+<span class="n">exportSession</span><span class="p">.</span><span class="n">timeRange</span><span class="o">=</span> <span class="n">exportTimeRange</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">([[</span><span class="n">NSFileManager</span> <span class="n">defaultManager</span><span class="p">]</span> <span class="n">fileExistsAtPath</span><span class="o">:</span><span class="n">audioPath</span><span class="p">])</span> <span class="p">{</span>
+    <span class="p">[[</span><span class="n">NSFileManager</span> <span class="n">defaultManager</span><span class="p">]</span> <span class="n">removeItemAtPath</span><span class="o">:</span><span class="n">audioPath</span> <span class="n">error</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="p">[</span><span class="n">exportSession</span> <span class="n">exportAsynchronouslyWithCompletionHandler</span><span class="o">:^</span><span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">exportSession</span><span class="p">.</span><span class="n">status</span><span class="o">==</span><span class="n">AVAssetExportSessionStatusFailed</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;failed&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;AudioLocation : %@&quot;</span><span class="p">,</span><span class="n">audioPath</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}];</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2 id="_1">参考文献</h2>
+<p><a href="http://stackoverflow.com/questions/6936464/ios-extracting-audio-from-mov-file">iOS Extracting Audio from .mov file</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

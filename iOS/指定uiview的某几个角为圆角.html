@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>指定UIView的某几个角为圆角 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;指定UIView的某几个角为圆角</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">指定UIView的某几个角为圆角</div>
+  <div id="content">
+  <div class="hlcode"><pre><span class="n">UIView</span> <span class="o">*</span><span class="n">view2</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithFrame</span><span class="o">:</span><span class="n">CGRectMake</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">)];</span>
+<span class="n">view2</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">redColor</span><span class="p">];</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="n">addSubview</span><span class="o">:</span><span class="n">view2</span><span class="p">];</span>
+
+<span class="n">UIBezierPath</span> <span class="o">*</span><span class="n">maskPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIBezierPath</span> <span class="n">bezierPathWithRoundedRect</span><span class="o">:</span><span class="n">view2</span><span class="p">.</span><span class="n">bounds</span> <span class="n">byRoundingCorners</span><span class="o">:</span><span class="n">UIRectCornerBottomLeft</span> <span class="o">|</span> <span class="n">UIRectCornerBottomRight</span> <span class="n">cornerRadii</span><span class="o">:</span><span class="n">CGSizeMake</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)];</span>
+<span class="n">CAShapeLayer</span> <span class="o">*</span><span class="n">maskLayer</span> <span class="o">=</span> <span class="p">[[</span><span class="n">CAShapeLayer</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="n">maskLayer</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">view2</span><span class="p">.</span><span class="n">bounds</span><span class="p">;</span>
+<span class="n">maskLayer</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">maskPath</span><span class="p">.</span><span class="n">CGPath</span><span class="p">;</span>
+<span class="n">view2</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">maskLayer</span><span class="p">;</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

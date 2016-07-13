@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>Mac上安装wget - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#MacOS">MacOS</a>&nbsp;»&nbsp;Mac上安装wget</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Mac上安装wget</div>
+  <div id="content">
+  <p>下载wget有两种方法，一种上<a href="http://ftp.gnu.org/gnu/wget/">http://ftp.gnu.org/gnu/wget/</a>上下载压缩文件，一种通过终端。</p>
+<div class="hlcode"><pre><span class="n">curl</span> <span class="o">-</span><span class="n">O</span> <span class="n">http</span><span class="o">:</span><span class="c1">//ftp.gnu.org/gnu/wget/wget-1.17.1.tar.gz</span>
+</pre></div>
+
+
+<p>解压两种方法同上：</p>
+<div class="hlcode"><pre><span class="n">tar</span> <span class="o">-</span><span class="n">xzvf</span> <span class="n">wget</span><span class="o">-</span><span class="mf">1.13.4</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+</pre></div>
+
+
+<p>以下是安装命令：</p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="n">wget</span><span class="o">-</span><span class="mf">1.13.4</span>
+<span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">ssl</span><span class="o">=</span><span class="n">openssl</span>
+<span class="n">make</span>
+<span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
+</pre></div>
+
+
+<p>如果不加with-ssl=openssl这个参数，会报错：</p>
+<div class="hlcode"><pre><span class="n">configure</span><span class="o">:</span> <span class="n">error</span><span class="o">:</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">ssl</span> <span class="n">was</span> <span class="n">given</span><span class="o">,</span> <span class="n">but</span> <span class="n">GNUTLS</span> <span class="k">is</span> <span class="n">not</span> <span class="n">available</span><span class="o">.</span>
+</pre></div>
+
+
+<p>如果没有安装openssl，安装方法如下：</p>
+<div class="hlcode"><pre><span class="n">brew</span> <span class="n">install</span> <span class="n">openssl</span>
+<span class="n">brew</span> <span class="n">link</span> <span class="o">--</span><span class="n">force</span> <span class="n">openssl</span>
+<span class="n">gem</span> <span class="n">install</span> <span class="n">eventmachine</span>
+</pre></div>
+
+
+<p>然后重新运行安装命令。
+安装完成后执行：</p>
+<div class="hlcode"><pre><span class="n">which</span> <span class="n">wget</span>
+</pre></div>
+
+
+<p>一般成功都会安装在这个位置：
+<strong>/usr/local/bin/wget</strong></p>
+<h2 id="_1">参考文献</h2>
+<p><a href="https://thomashunter.name/blog/install-wget-on-os-x-lion/">Install wget on OS X Lion</a>
+<a href="http://stackoverflow.com/questions/30818391/gem-eventmachine-fatal-error-openssl-ssl-h-file-not-found">gem eventmachine fatal error: 'openssl/ssl.h' file not found</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

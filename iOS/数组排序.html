@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>数组排序 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;数组排序</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">数组排序</div>
+  <div id="content">
+  <div class="hlcode"><pre><span class="n">NSArray</span> <span class="o">*</span><span class="n">temp</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span>
+                      <span class="err">@</span><span class="p">{</span><span class="s">@&quot;value&quot;</span><span class="o">:</span><span class="mi">@1</span><span class="p">},</span>
+                      <span class="err">@</span><span class="p">{</span><span class="s">@&quot;value&quot;</span><span class="o">:</span><span class="mi">@2</span><span class="p">},</span>
+                      <span class="err">@</span><span class="p">{</span><span class="s">@&quot;value&quot;</span><span class="o">:</span><span class="mi">@3</span><span class="p">},</span>
+                      <span class="err">@</span><span class="p">{</span><span class="s">@&quot;value&quot;</span><span class="o">:</span><span class="mi">@4</span><span class="p">},</span>
+                      <span class="err">@</span><span class="p">{</span><span class="s">@&quot;value&quot;</span><span class="o">:</span><span class="mi">@5</span><span class="p">},</span>
+                      <span class="p">];</span>
+    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">test</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableArray</span> <span class="n">arrayWithArray</span><span class="o">:</span><span class="n">temp</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">test</span> <span class="n">sortUsingComparator</span><span class="o">:^</span><span class="n">NSComparisonResult</span><span class="p">(</span><span class="kt">id</span>  <span class="n">_Nonnull</span> <span class="n">obj1</span><span class="p">,</span> <span class="kt">id</span>  <span class="n">_Nonnull</span> <span class="n">obj2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="n">obj1</span> <span class="n">valueForKey</span><span class="o">:</span><span class="s">@&quot;value&quot;</span><span class="p">]</span> <span class="n">integerValue</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">[[</span><span class="n">obj2</span> <span class="n">valueForKey</span><span class="o">:</span><span class="s">@&quot;value&quot;</span><span class="p">]</span> <span class="n">integerValue</span><span class="p">];</span>
+    <span class="p">}];</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

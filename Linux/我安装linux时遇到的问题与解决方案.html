@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>我安装Linux时遇到的问题与解决方案 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;我安装Linux时遇到的问题与解决方案</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">我安装Linux时遇到的问题与解决方案</div>
+  <div id="content">
+  <h2 id="_1">安装环境</h2>
+<p>我的电脑是09年买的，型号是华硕的<strong>F81Se</strong>。有光驱可是我没有<strong>Linux</strong>光盘，所以打算用<strong>U盘</strong>安装，电脑的系统是<strong>win7</strong>，32位。</p>
+<p>好了，开始我的Linux安装过程回顾了。</p>
+<h2 id="linux">Linux系统选择</h2>
+<p>我在网上找了好多关于学习Linux安装哪个系统好，最后我选定了<strong>CentOS</strong>。32位，6.4版本，这一版本安装成功了。</p>
+<p>期间我选择了好多64位Linux系统，结果都失败了。我试验过的都是当时最新版，有：</p>
+<ul>
+<li>ubuntu</li>
+<li>ubuntu麒麟</li>
+<li>起点OS</li>
+<li>fedora</li>
+<li>CentOS</li>
+<li>debian</li>
+</ul>
+<p>后来，我想可能是我机器的原因吧，不支持64位的，并且我的电脑是老电脑，所以我选择了32位的旧版本的CentOS，然后安装成功。</p>
+<p>以上系统，我安装失败，并不代表系统的问题，可能是我安装的方法问题或者是系统不支持我的电脑。所以，虚拟机或者别的机器可以安装任意自己喜欢的Linux系统，我只是说一下我失败的过程。</p>
+<h2 id="linux_1">艰辛的Linux安装过程</h2>
+<p>系统有了，网上开始找U盘安装方法吧，安装方法有好多，有推荐<strong>poweriso</strong>，<strong>UltraISO</strong>，<strong>老毛桃</strong>，<strong>大白菜</strong>，<strong>LinuxLive USB Creator</strong>等等。反正原理都一样，就是将Linux写入硬盘映像。我选择的用UltraISO，写入完成后，用U盘启动，然后选择安装CentOS，按Tab键，修改启动参数。</p>
+<p>将</p>
+<div class="hlcode"><pre><span class="n">vmlinuz</span> <span class="n">initrd</span><span class="o">=</span><span class="n">initrd</span><span class="p">.</span><span class="n">img</span> <span class="n">inst</span><span class="p">.</span><span class="n">stage2</span><span class="o">=</span><span class="n">hd</span><span class="o">:</span><span class="n">LABEL</span><span class="o">=</span><span class="n">CentOS</span><span class="err">\</span><span class="n">x207</span><span class="err">\</span><span class="n">x20x86_64</span> <span class="n">rd</span><span class="p">.</span><span class="n">live</span><span class="p">.</span><span class="n">check</span> <span class="n">quiet</span>
+</pre></div>
+
+
+<p>改为：</p>
+<div class="hlcode"><pre><span class="n">vmlinuz</span> <span class="n">initrd</span><span class="o">=</span><span class="n">initrd</span><span class="p">.</span><span class="n">img</span> <span class="n">repo</span><span class="o">=</span><span class="n">hd</span><span class="o">:/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb1</span><span class="o">:/</span> <span class="n">quiet</span>
+</pre></div>
+
+
+<p>也有网上说改成</p>
+<div class="hlcode"><pre><span class="n">dd</span> <span class="k">if</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">fsjohnhuang</span><span class="o">/</span><span class="n">Download</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="mf">6.5</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">bin</span><span class="o">-</span><span class="n">DVD1</span><span class="p">.</span><span class="n">iso</span> <span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span>
+</pre></div>
+
+
+<p>然而第二种对我来说不好使，回车直接闪光标，卡死在那里。第一种方法那，我也是要么灰屏，要么是加载了好多什么我也不知道的东西，然后卡死在一行显示<strong>“xxxxx bypass”</strong>这里（我只记住了最后一个单词）。</p>
+<p>这个方法安装失败。</p>
+<p>然后又在网上找了好多相关教程，有一个教程用的是<strong>USBWriter</strong>将U盘量产，开始我不知道是量产工具，然后我写完以后，运行结果同上。然后再一看我的U盘，直接变成了6m。顿时，我凌乱了。</p>
+<p>最后，用<strong>老毛桃</strong>初始化了一下U盘，U盘恢复到原来状态了。</p>
+<p>于是，我又换了一种安装方法，我用这片文章里的方法，<a href="http://blog.sina.com.cn/s/blog_86e874d30101e3d8.html">Win7下安装CentOS 6.5双系统</a>，也是卡在<strong>XXXX bypass</strong>。又一次失败。</p>
+<p>然后我又用了将硬盘分区格式化成ext3格式的，将Linux镜像文件解压，结果失败。将Linux镜像文件解压到U盘结果也失败。</p>
+<p>最后，我想可能是我电脑的问题，于是我下了一个6.4版本的CentOS，32位的，然后用老毛桃写入映像，U盘启动后，直接选安装，加载了一些东西，以为会成功，接着又卡在了一处，这次与上一次不同。这次我觉得这个系统版本应该能支持了，所以我就上网上找解决方案，果然找到了。</p>
+<p>到Bios进行设置。方法如下 
+一般情况笔记本电脑就是按F2进入bios设置 
+选择security 项后选择I/O interface security c 进入看见有如下选项 
+1. audio/modem interface<br />
+2. lan network interface<br />
+3. wireless network interface<br />
+4. odd interface 
+5. usb interface<br />
+6. new card interface 
+默认情况上面选项都是unlocked的就是打开的 
+问题就出在这点，new card interface 需要关闭最后一项改为locked 
+如果你是安装也可以关闭wireless network interface 改为locked 
+还可以把audio/modem interface 、n network interface、wireless network interface 、 
+new card interface这几项都设置为locked。 
+ODD interface 和usb interface 不需要关闭设置为unlocked 。如果你这两项关闭了那usb和光驱就无法启动了。 
+安装完系统后需要重新修改bios设置选项，audio/modem interface、 
+lan network interface、wireles network interface、odd interface、usb nterface 这5项设置为 
+unlocked，new card interface设置为locked。如果最后一项不设置为locked，那么如果你安装在可移动硬盘上的系统就是无法启动的，切记！</p>
+<p>然后，再次U盘启动安装，果然，安装成功！</p>
+<p>正满怀欣喜的准备进系统看看，一启动发现无法启动，所以决定重新安装。可是一插上U盘，启动成功了。我想可能是安装过程中某一步选错了，导致将启动配置安装在了U盘上。我不甘心重新装，于是在网上找到了解决方案，内容如下：</p>
+<p>1.进入centos后打开终端用root用户进入grub模式</p>
+<div class="hlcode"><pre><span class="n">grub</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="n">grub</span><span class="o">&gt;</span>  <span class="n">find</span> <span class="o">/</span><span class="n">grub</span><span class="o">/</span><span class="n">stage1</span> 
+</pre></div>
+
+
+<p>这是我的电脑出现的
+(hd0,1)</p>
+<p>2.将CentOS的grub安装到MBR</p>
+<div class="hlcode"><pre><span class="n">grub</span><span class="o">&gt;</span> <span class="n">root</span> <span class="p">(</span><span class="n">hd0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="n">grub</span><span class="o">&gt;</span> <span class="n">setup</span> <span class="p">(</span><span class="n">hd0</span><span class="p">)</span>
+</pre></div>
+
+
+<p>这里要和上面find里查到的一致hd0表示第一块硬盘 0表示第一个分区</p>
+<p>3.重启完成</p>
+<p>4.最后用vim修改/boot/grub/grub.conf，把所有(hd0,0）改成与前面find找到的一致。</p>
+<div class="hlcode"><pre><span class="n">all</span> <span class="n">kernel</span> <span class="n">and</span> <span class="n">initrd</span> <span class="n">paths</span> <span class="n">are</span> <span class="n">relative</span> <span class="n">to</span> <span class="o">/</span><span class="p">,</span> <span class="n">eg</span><span class="p">.</span>
+<span class="n">root</span> <span class="p">(</span><span class="n">hd1</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">kernel</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">vmlinuz</span><span class="o">-</span><span class="n">version</span> <span class="n">ro</span> <span class="n">root</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda8</span>
+<span class="n">initrd</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">initrd</span><span class="o">-</span><span class="p">[</span><span class="n">generic</span><span class="o">-</span><span class="p">]</span><span class="n">version</span><span class="p">.</span><span class="n">img</span>
+<span class="n">boot</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb</span>
+<span class="k">default</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">timeout</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">splashimage</span><span class="o">=</span><span class="p">(</span><span class="n">hd0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">grub</span><span class="o">/</span><span class="n">splash</span><span class="p">.</span><span class="n">xpm</span><span class="p">.</span><span class="n">gz</span>
+<span class="n">title</span> <span class="n">CentOS</span> <span class="p">(</span><span class="mf">2.6.32</span><span class="o">-</span><span class="mf">358.2.1</span><span class="p">.</span><span class="n">el6</span><span class="p">.</span><span class="n">i686</span><span class="p">)</span>
+        <span class="n">root</span> <span class="p">(</span><span class="n">hd0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">kernel</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">vmlinuz</span><span class="o">-</span><span class="mf">2.6.32</span><span class="o">-</span><span class="mf">358.2.1</span><span class="p">.</span><span class="n">el6</span><span class="p">.</span><span class="n">i686</span> <span class="n">ro</span> <span class="n">root</span><span class="o">=</span><span class="n">UUID</span><span class="o">=</span><span class="mi">73023</span><span class="n">ee3</span><span class="o">-</span><span class="n">a312</span><span class="o">-</span><span class="mf">49e7</span><span class="o">-</span><span class="mi">990</span><span class="n">c</span><span class="o">-</span><span class="mi">89</span><span class="n">a74f7bf89a</span> <span class="n">rd_NO_LUKS</span>  <span class="n">KEYBOARDTYPE</span><span class="o">=</span><span class="n">pc</span> <span class="n">KEYTABLE</span><span class="o">=</span><span class="n">us</span> <span class="n">rd_NO_MD</span> <span class="n">LANG</span><span class="o">=</span><span class="n">zh_CN</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">rd_NO_LVM</span> <span class="n">rd_NO_DM</span> <span class="n">rhgb</span> <span class="n">quiet</span> <span class="n">crashkernel</span><span class="o">=</span><span class="k">auto</span>
+        <span class="n">initrd</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">initramfs</span><span class="o">-</span><span class="mf">2.6.32</span><span class="o">-</span><span class="mf">358.2.1</span><span class="p">.</span><span class="n">el6</span><span class="p">.</span><span class="n">i686</span><span class="p">.</span><span class="n">img</span>
+<span class="n">title</span> <span class="n">CentOS</span> <span class="p">(</span><span class="mf">2.6.32</span><span class="o">-</span><span class="mf">358.</span><span class="n">el6</span><span class="p">.</span><span class="n">i686</span><span class="p">)</span>
+        <span class="n">root</span> <span class="p">(</span><span class="n">hd0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">kernel</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">vmlinuz</span><span class="o">-</span><span class="mf">2.6.32</span><span class="o">-</span><span class="mf">358.</span><span class="n">el6</span><span class="p">.</span><span class="n">i686</span> <span class="n">ro</span> <span class="n">root</span><span class="o">=</span><span class="n">UUID</span><span class="o">=</span><span class="mi">73023</span><span class="n">ee3</span><span class="o">-</span><span class="n">a312</span><span class="o">-</span><span class="mf">49e7</span><span class="o">-</span><span class="mi">990</span><span class="n">c</span><span class="o">-</span><span class="mi">89</span><span class="n">a74f7bf89a</span> <span class="n">rd_NO_LUKS</span>  <span class="n">KEYBOARDTYPE</span><span class="o">=</span><span class="n">pc</span> <span class="n">KEYTABLE</span><span class="o">=</span><span class="n">us</span> <span class="n">rd_NO_MD</span> <span class="n">LANG</span><span class="o">=</span><span class="n">zh_CN</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">rd_NO_LVM</span> <span class="n">rd_NO_DM</span> <span class="n">rhgb</span> <span class="n">quiet</span>
+        <span class="n">initrd</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">initramfs</span><span class="o">-</span><span class="mf">2.6.32</span><span class="o">-</span><span class="mf">358.</span><span class="n">el6</span><span class="p">.</span><span class="n">i686</span><span class="p">.</span><span class="n">img</span>
+<span class="n">title</span> <span class="n">windowsXP</span>
+        <span class="n">rootnoverify</span> <span class="p">(</span><span class="n">hd0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">chainloader</span> <span class="o">+</span><span class="mi">1</span>
+</pre></div>
+
+
+<p>然后重新启动就可以看到启动菜单了，从此摆脱U盘启动。</p>
+<h2 id="_2">结束语</h2>
+<p>至此，系统安装完成，我这是不懂Linux技术所以导致走了这么多弯路，走弯路其实并不是一件坏事，可以多总结一些经验，希望我这篇文章能帮助一些像我一样的Linux小白。</p>
+<h2 id="_3">参考文献</h2>
+<p><a href="http://m.blog.csdn.net/blog/pandahyang/36005481">[转]U盘安装Centos后拔除U盘无法启动问题解决方法</a></p>
+<p><a href="http://www.linuxidc.com/wap.aspx?nid=35315">华硕电脑无法安装Ubuntu 10.10以后版本解决</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_86e874d30101e3d8.html">Win7下安装CentOS 6.5双系统</a></p>
+<p><a href="http://www.linuxidc.com/Linux/2014-10/108014.htm">U盘安装CentOS 7.0图文详解教程</a></p>
+<p><a href="http://www.centoscn.com/image-text/setup/2014/0724/3342.html">centos 7 u盘安装</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

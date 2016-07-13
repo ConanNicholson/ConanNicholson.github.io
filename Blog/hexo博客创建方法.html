@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>hexo博客创建方法 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Blog">Blog</a>&nbsp;»&nbsp;hexo博客创建方法</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">hexo博客创建方法</div>
+  <div id="content">
+  <p>首先，先从设备说起，我的设备是MacPro，所以我都是在Mac上操作的，windows上可能会有所不同，但是大同小异。</p>
+<p>windows下可以参考这篇博文：<a href="http://blog.fens.me/hexo-blog-github/">Hexo在github上构建免费的Web应用</a>，讲的很详细。</p>
+<p>也可以参考这一篇：<a href="http://hifor.net/2015/07/01/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2-hexo-github/">零基础免费搭建个人博客-hexo+github</a></p>
+<h2 id="_1">准备工作</h2>
+<p>我们需要有一个网络空间用来存储blog内容，我用的是<a href="http://github.com">GitHub</a>。</p>
+<p>下面是创建过程：</p>
+<ul>
+<li>注册一个GitHub账号。</li>
+<li>建立与你用户名相对应的仓库。</li>
+<li>上传blog可以直接输入用户名和密码，如果嫌麻烦可以使用SSH公钥。</li>
+</ul>
+<p>添加SSH-Key方法:</p>
+<p>1.终端输入：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span>
+</pre></div>
+
+
+<p>看看是否有以下命名的公钥：</p>
+<p>>id_rsa</p>
+<p>>id_rsa.pub</p>
+<p>如果有的话则不用操作以下步骤，没有的话，按照以下步骤生成公钥。</p>
+<p>2.终端输入：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">rsa</span> <span class="o">-</span><span class="n">b</span> <span class="mi">4096</span> <span class="o">-</span><span class="n">C</span> <span class="s">&quot;你的邮箱地址&quot;</span>
+</pre></div>
+
+
+<p>然后会提示</p>
+<div class="hlcode"><pre><span class="n">Enter</span> <span class="n">file</span> <span class="n">in</span> <span class="n">which</span> <span class="n">to</span> <span class="n">save</span> <span class="n">the</span> <span class="n">key</span> <span class="p">(</span><span class="n">Users</span><span class="o">/</span><span class="err">用户名</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">)</span><span class="o">:</span> 
+</pre></div>
+
+
+<p>这里保持默认，直接回车</p>
+<p>接着又会提示要求输入公钥密码</p>
+<div class="hlcode"><pre><span class="n">Enter</span> <span class="n">passphrase</span><span class="p">(</span><span class="n">empty</span> <span class="k">for</span> <span class="n">no</span> <span class="n">passphrase</span><span class="p">)</span><span class="o">:</span>
+<span class="n">Enter</span> <span class="n">same</span> <span class="n">passphrase</span> <span class="n">again</span><span class="o">:</span>
+</pre></div>
+
+
+<p>提示生成<strong>id_rsa</strong>，<strong>id_rsa.pub</strong>证明公钥生成成功。</p>
+<p>3.将公钥加入到你的ssh-agent</p>
+<p>确定你的ssh-agent是否可用，输入以下命令：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">eval</span> <span class="s">&quot;$(ssh-agent -s)&quot;</span>
+</pre></div>
+
+
+<p>提示<strong>Agent pid xxxxx</strong>，证明可用。</p>
+<p>运行以下命令，添加SSH key到ssh-agent：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ssh</span><span class="o">-</span><span class="n">add</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+</pre></div>
+
+
+<p>4.添加SSH key到你的GitCafe</p>
+<p>输入以下命令，将公钥复制到剪贴板。</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">pbcopy</span> <span class="o">&lt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">pub</span>
+</pre></div>
+
+
+<p>然后到你的GitHub的账户设置中，找到SSH公钥管理，添加新的公钥，将公钥内容复制进去，保存就好了。</p>
+<p>5.测试连接</p>
+<p>输入以下命令：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">T</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
+<p>如果提示类似</p>
+<p><strong>Hi xxxxxx! You've successfully authenticated, but GitHub does not provide shell access.</strong></p>
+<p>这样的信息，则证明连接成功。</p>
+<h2 id="blog">安装blog环境</h2>
+<p>Mac先安装brew，命令如下：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ruby</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span>
+</pre></div>
+
+
+<p>详情可见<a href="http://brew.sh/index_zh-cn.html">brew官网</a>。</p>
+<p>安装node和npm，执行命令：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">node</span>
+</pre></div>
+
+
+<p>该命令执行后，自动装好node和npm。</p>
+<p>更新node：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">brew</span> <span class="n">upgrade</span> <span class="n">node</span>
+</pre></div>
+
+
+<p>MacOS已经集成<strong>git</strong>不用安装。</p>
+<p>Node和git都安装好了以后，可以执行如下命令安装<strong>hexo</strong>：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">hexo</span>
+</pre></div>
+
+
+<p>然后，执行init命令初始化hexo到你指定的目录：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="nx">hexo</span> <span class="nb">init</span> <span class="o">&lt;</span><span class="nx">folder</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>也可以切换到指定目录下直接运行<strong>hexo init</strong>命令。</p>
+<p>至此，全部安装工作全部完成。</p>
+<h2 id="hexo">启动hexo环境</h2>
+<p>切换到你的hexo的init目录，执行如下命令，生成静态页面到hexo\public\目录。</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">hexo</span> <span class="n">g</span>
+</pre></div>
+
+
+<p>执行如下命令，启动本地hexo服务，进行博文的预览与调试。</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">hexo</span> <span class="n">s</span>
+</pre></div>
+
+
+<p>浏览器输入<a href="http://localhost:4000">http://localhost:4000</a>就可以看到blog效果，本地运行的话，不用执行生成静态页面的命令，如果上传到服务器上就要执行生成静态页面的命令。</p>
+<p>貌似在<strong>IE浏览器</strong>会有显示问题，如果出现排版错乱的话，尝试换其他浏览器浏览。</p>
+<h2 id="_2">添加发布地址</h2>
+<p>在你的hexo根文件夹下找到<strong>_config.yml</strong>，然后如下方式添加发布地址。</p>
+<div class="hlcode"><pre><span class="n">deploy</span><span class="o">:</span>
+  <span class="n">type</span><span class="o">:</span> <span class="n">git</span>
+  <span class="n">repo</span><span class="o">:</span> 
+      <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="o">.</span><span class="na">com</span><span class="o">:</span><span class="n">ConanNic</span><span class="o">/</span><span class="n">conannic</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">git</span><span class="o">,</span><span class="n">master</span>
+</pre></div>
+
+
+<h2 id="_3">开始写博文。</h2>
+<p>执行new命令，生成指定名称的文章至hexo\source_posts\文章题目.md</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">hexo</span> <span class="n">new</span> <span class="p">[</span><span class="n">layout</span><span class="p">]</span> <span class="s">&quot;文章题目&quot;</span>
+</pre></div>
+
+
+<p>其中layout是可选参数，默认值为post。有哪些layout呢，请到scaffolds目录下查看，这些文件名称就是layout名称。当然你也可以添加自己的layout，方法就是添加一个文件即可，同时你也可以编辑现有的layout，比如post的layout默认是hexo\scaffolds\post.md。</p>
+<p>默认内容如下：</p>
+<div class="hlcode"><pre><span class="nl">title:</span> <span class="p">{</span> <span class="p">{</span> <span class="n">title</span> <span class="p">}</span> <span class="p">}</span>
+<span class="nl">date:</span> <span class="p">{</span> <span class="p">{</span> <span class="n">date</span> <span class="p">}</span> <span class="p">}</span>
+<span class="nl">tags:</span>
+</pre></div>
+
+
+<p>我想添加categories，以免每次手动输入，只需要修改这个文件添加一行，如下：</p>
+<div class="hlcode"><pre><span class="nl">title:</span> <span class="p">{</span> <span class="p">{</span> <span class="n">title</span> <span class="p">}</span> <span class="p">}</span>
+<span class="nl">date:</span> <span class="p">{</span> <span class="p">{</span> <span class="n">date</span> <span class="p">}</span> <span class="p">}</span>
+<span class="nl">categories:</span>
+<span class="nl">tags:</span>
+</pre></div>
+
+
+<p><strong>所有文件内容中的冒号后面必须有空格，没有空格会出问题。</strong></p>
+<p>文章摘要</p>
+<p>在需要显示摘要的地方添加如下代码即可：</p>
+<div class="hlcode"><pre><span class="o">---</span>
+<span class="err">摘要</span>
+<span class="o">&lt;!--</span><span class="n">more</span><span class="o">--&gt;</span>
+<span class="err">原文</span>
+</pre></div>
+
+
+<p><strong>hexo中所有文件的编码格式均为UTF-8</strong></p>
+<h2 id="_4">博文图片储存方案</h2>
+<p>如果博客文章中要显示图片，最好，把图片上传的网络空间上。因为gitcafe提供的空间有限，只有512m，所以，图片过多可能会是空间紧张。如果你只写文字或者少量的图片的话，可以不用顾虑这个。可是我觉得还是把图片转存比较好。</p>
+<p>我推荐这个网络相册，<a href="http://tinypic.com/">tinypic</a></p>
+<p>上传好图片，用生成的外链做图片地址，虽然是国外的网站，但是访问速度还是蛮快的。</p>
+<h2 id="hexo_1">hexo主题安装</h2>
+<p>我用的主题是<a href="https://github.com/MOxFIVE/hexo-theme-yelee">yelee</a>，安装及使用方法，主题页面有讲解，这里不再赘述。</p>
+<h2 id="_5">申请域名</h2>
+<p>如果举得gitcafe的域名自己不喜欢，可以自己买个域名，然后进行绑定。
+绑定方法自行百度，资料多的泛滥。我是用<a href="https://www.godaddy.com/">狗爹</a>申请的域名，貌似在<a href="http://www.aliyun.com/">阿里</a>买要比狗爹便宜，所以这里推荐用阿里。</p>
+<h2 id="_6">结束语</h2>
+<p>好了，文章到这里就结束了。其实搭建自己的blog一点都不难，只要按照网上的教程一步步地走搭建一个自己的blog只是分分钟的事情。难就难再教程有些地方说的模糊，弄得你总是得不到相应地效果，所以就要多找资料多尝试。我搭建我这个blog的时候也遇到好多问题，不过都是些零散的，由于从搭建完毕到写这篇文章，由于忙，隔了好久，我也记不清遇到的问题了。所以这里就无法列出来给大家分享，不过上面生成SSH key是我遇到的问题之一，我也是找了好久资料才弄明白的，所以我就把生成公钥的方法给大家写了出来。</p>
+<p>希望我的这篇文章能帮到大家。</p>
+<h2 id="_7">参考文献</h2>
+<p><a href="http://ibruce.info/2013/11/22/hexo-your-blog/">hexo你的博客</a></p>
+<p><a href="https://help.github.com/articles/generating-ssh-keys/">Generating SSH keys</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

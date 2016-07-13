@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>CentOSWiFi上网 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;CentOSWiFi上网</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">CentOSWiFi上网</div>
+  <div id="content">
+  <h2 id="_1">检测无线网卡</h2>
+<p>执行以下命令：</p>
+<div class="hlcode"><pre><span class="n">iwconfig</span>
+</pre></div>
+
+
+<p>若打印<strong>wlan0</strong>或<strong>wlan</strong>字样的无线网卡信息，则表明无线网卡驱动已经安装，否则要先安装无线网卡驱动方能继续。</p>
+<p>安装无线网卡可以参考这篇文章：<a href="http://www.linuxidc.com/Linux/2014-10/108418.htm">CentOS 6.5 安装无线网卡驱动实现无线上网</a></p>
+<p>如果，无线网卡已经驱动，则进入下面配置环节。</p>
+<h2 id="_2">无线上网配置</h2>
+<ul>
+<li>搜索相应的WiFi。执行以下命令：</li>
+</ul>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">iwlist</span> <span class="n">scan</span>
+</pre></div>
+
+
+<p>找到自己要连接的WiFi。WiFi名称在ESSID字段显示。</p>
+<ul>
+<li>生成热点的配置（wpa2加密）</li>
+</ul>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">wpa_passphrase</span> <span class="n">wifi</span><span class="err">名称</span> <span class="n">wifi</span><span class="err">密码</span>
+</pre></div>
+
+
+<p>会生成这样格式的配置代码：</p>
+<div class="hlcode"><pre><span class="n">network</span><span class="o">=</span><span class="p">{</span> 
+        <span class="n">ssid</span><span class="o">=</span><span class="s">&quot;SSID_xxx&quot;</span> 
+        <span class="err">#</span><span class="n">psk</span><span class="o">=</span><span class="s">&quot;your_pass_here&quot;</span> 
+        <span class="n">psk</span><span class="o">=</span><span class="n">xxxxxxxxxxxx</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>将这段代码添加到 /etc/wpa_supplicant/wpa_supplicant.conf 文件中：</p>
+<div class="hlcode"><pre><span class="n">ctrl_interface</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">wpa_supplicant</span> 
+<span class="n">ctrl_interface_group</span><span class="o">=</span><span class="n">wheel</span>
+<span class="n">network</span><span class="o">=</span><span class="p">{</span> 
+        <span class="n">ssid</span><span class="o">=</span><span class="s">&quot;SSID_xxx&quot;</span> 
+        <span class="err">#</span><span class="n">psk</span><span class="o">=</span><span class="s">&quot;your_pass_here&quot;</span> 
+        <span class="n">psk</span><span class="o">=</span><span class="n">xxxxxxxxxxxx</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>配置就完成了，下面添加启动代码</p>
+<ul>
+<li>在 /etc/rc.local 中添加相应的wifi启动代码：</li>
+</ul>
+<div class="hlcode"><pre><span class="n">pkill</span> <span class="n">wpa_supplicant</span> 
+<span class="n">pkill</span> <span class="n">dhclient</span>
+<span class="n">ifconfig</span> <span class="n">wlan0</span> <span class="n">down</span> 
+<span class="n">ifconfig</span> <span class="n">wlan0</span> <span class="n">up</span> 
+<span class="n">iwconfig</span> <span class="n">wlan0</span> <span class="n">essid</span> <span class="s">&quot;SSID_xxx&quot;</span> 
+<span class="n">wpa_supplicant</span> <span class="o">-</span><span class="n">B</span> <span class="o">-</span><span class="n">Dwext</span> <span class="o">-</span><span class="n">iwlan0</span> <span class="o">-</span><span class="n">c</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">wpa_supplicant</span><span class="o">/</span><span class="n">wpa_supplicant</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">dhclient</span> <span class="n">wlan0</span>
+</pre></div>
+
+
+<p>现在重启系统，无线网络就会配置好了</p>
+<h2 id="_3">参考文献</h2>
+<p><a href="http://www.jb51.net/os/RedHat/119155.html">CentOS-6.4无线上网命令行配置介绍</a></p>
+<p><a href="http://www.iiitoo.info/2014/01/01/centoswifinetwoking/">CENTOS6.5笔记本WIFI网络配置</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

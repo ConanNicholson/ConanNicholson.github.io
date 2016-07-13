@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>UEFI模式安装win8.1 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Windows">Windows</a>&nbsp;»&nbsp;UEFI模式安装win8.1</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">UEFI模式安装win8.1</div>
+  <div id="content">
+  <h2 id="uefi">什么是UEFI</h2>
+<p>可扩展固件接口（ExtensibleFirmware Interface，EFI）是 Intel 为全新类型的 PC 固件的体系结构、接口和服务提出的建议标准。其UEFI中图形化的硬件设置界面主要目的是为了提供一组在 OS 加载之前（启动前）在所有平台上一致的、正确指定的启动服务，被看做是有近20多年历史的PC BIOS的继任者。</p>
+<h2 id="uefilegacy">UEFI与Legacy</h2>
+<p>UEFI是新式的BIOS，Legacy是传统BIOS。你在UEFI模式下安装的系统，只能用UEFI模式引导；同理，如果你是在Legacy模式下安装的系统，也只能在Legacy模式下进系统。UEFI只支持64为系统且磁盘分区必须为gpt模式，传统BIOS使用Int 13中断读取磁盘，每次只能读64KB，非常低效，而UEFI每次可以读1MB，载入更快。此外，Win8，更是进一步优化了UEFI支持，号称可以实现瞬时开机。</p>
+<h2 id="uefilegacy_1">UEFI与Legacy比较</h2>
+<p><img alt="" src="http://i65.tinypic.com/9a8gv4.jpg" /></p>
+<p>从图中明显的可以看到，与传统BIOS想必，UEFI少了一步，这样的话加载的时间就会相应的减少一些。</p>
+<h2 id="uefi_1">个人理解的UEFI</h2>
+<p>我觉得UEFI就是不用检测系统在哪个硬盘了，如果你有100个硬盘，传统的要全部搜一遍，看看系统在哪个硬盘，然后选择启动。而UEFI就是指定了系统在哪个硬盘上，不管你有多少个硬盘，我就从指定的硬盘加载系统。</p>
+<p>以上是我的白话理解的UEFI可能不对，不对的话请指正。嘿嘿。</p>
+<h2 id="_1">准备工作</h2>
+<p>首先说一下我的安装配置，我的电脑是双硬盘的，一个固态硬盘，一个机械硬盘，用固态硬盘作为系统盘。</p>
+<p>安装前需要的东西有：</p>
+<ul>
+<li>一个大于4g的U盘。</li>
+<li>原版的<strong>win8.1 64位</strong>安装文件，注意UEFI只支持64位。</li>
+</ul>
+<h2 id="_2">开始安装</h2>
+<p>首先要把U盘格式化成FAT32的格式。</p>
+<p>应该是，UEFI无法识别NTFS吧。</p>
+<p>然后将Windows安装文件解压到U盘。</p>
+<p><img alt="" src="http://i64.tinypic.com/2vjbipv.jpg" /></p>
+<p>一般会是这些文件，如果不一样，只要有efi这个文件夹就行，因为一会要用到。</p>
+<p>然后，重启计算机，进入BIOS设置，进入BIOS的按钮因机器而定。</p>
+<p>按图操作，如果BIOS不相同，操作方法大同小异，找到相应的位置，执行相同的操作就行了。</p>
+<p><img alt="" src="http://i64.tinypic.com/ndaft0.jpg" /></p>
+<p><img alt="" src="http://i68.tinypic.com/et76t4.jpg" /></p>
+<p><img alt="" src="http://i65.tinypic.com/2d1qy5t.jpg" /></p>
+<p><img alt="" src="http://i64.tinypic.com/2iav995.jpg" /></p>
+<p><img alt="" src="http://i65.tinypic.com/3304f3n.jpg" /></p>
+<p><img alt="" src="http://i66.tinypic.com/2epkd3n.jpg" /></p>
+<p>设置完成后，保存重启，然后，进入启动选择菜单，按键因机器而定。</p>
+<p><img alt="" src="http://i65.tinypic.com/168wo5x.jpg" /></p>
+<p><img alt="" src="http://i67.tinypic.com/3096czs.jpg" /></p>
+<p>这一步要开始选择分区，安装系统了，这一步有点说法。</p>
+<p>有两种方案安装，但是都是要格式化硬盘的，所以一定要备份好重要文件，再执行这一步操作哦。</p>
+<ol>
+<li>不分区直接安装在固态硬盘。</li>
+<li>分区安装在固态硬盘。</li>
+</ol>
+<p>分不分区，硬盘格式都要为<strong>GPT格式</strong>。</p>
+<p>第一种，首先要转换硬盘格式为GPT，然后安装系统，系统自动会分区。</p>
+<p>下面说说第二种。</p>
+<p>现在我们到了选择硬盘安装系统的步骤了，此时，我们要做分区处理。</p>
+<p>按shift+F10，打开命令提示行：</p>
+<p>1、把MBR磁盘转换为GPT磁盘</p>
+<p>键入</p>
+<div class="hlcode"><pre><span class="n">diskpart</span>
+</pre></div>
+
+
+<p>打开diskpart工具</p>
+<p>选择目标磁盘</p>
+<div class="hlcode"><pre><span class="n">list</span> <span class="n">disk</span>
+</pre></div>
+
+
+<p>列出系统拥有的磁盘</p>
+<div class="hlcode"><pre><span class="n">select</span> <span class="n">disk</span> <span class="mi">0</span> 
+</pre></div>
+
+
+<p>选择磁盘号（请根据磁盘大小，自行判断你的目标磁盘）</p>
+<p>2、清空目标磁盘，并转换为GPT格式</p>
+<div class="hlcode"><pre><span class="n">clean</span>
+</pre></div>
+
+
+<p>清除磁盘,该命令会抹去磁盘上所有数据（注意备份以前的重要数据）</p>
+<div class="hlcode"><pre><span class="n">convert</span> <span class="n">gpt</span>
+</pre></div>
+
+
+<p>将磁盘转换为GPT格式</p>
+<p>3、建立EFI分区及系统安装分区</p>
+<div class="hlcode"><pre><span class="n">create</span> <span class="n">partition</span> <span class="n">efi</span> <span class="n">size</span><span class="o">=</span><span class="mi">200</span>
+</pre></div>
+
+
+<p>建立EFI分区，大小为200M </p>
+<div class="hlcode"><pre><span class="n">create</span> <span class="n">partition</span> <span class="n">msr</span> <span class="n">size</span><span class="o">=</span><span class="mi">128</span>
+</pre></div>
+
+
+<p>建立MSR分区，微软默认建立的话，大小是128M</p>
+<div class="hlcode"><pre><span class="n">create</span> <span class="n">partition</span> <span class="n">primary</span> <span class="n">size</span><span class="o">=</span><span class="mi">51200</span>
+</pre></div>
+
+
+<p>建立主分区，大小为50G，根据自己需求调整，该分区用来安装win8</p>
+<p>最后，<strong>最好留20G作为SSD主控的中转区域，这样能有效保护SSD</strong>。</p>
+<div class="hlcode"><pre><span class="n">list</span> <span class="n">partition</span>
+</pre></div>
+
+
+<p>列出磁盘上的分区</p>
+<p>关闭命令提示符，点刷新，刷新所有硬盘数据，选择要安装系统的分区。</p>
+<p>还有一点，如果是固态硬盘的话，用diskpart的好处是自动4k对齐，这样会更有利于固态硬盘读取数据的速度。</p>
+<p>完成后，执行系统安装。</p>
+<p>安装完成后，取消GUI图形界面引导加快启动时间。</p>
+<p>点击Win键+X，或者按下键盘上的Win+R快捷键调出运行对话框。</p>
+<p><img alt="" src="http://i64.tinypic.com/166em4z.jpg" /></p>
+<p>输入msconfig，进入到系统配置界面。 </p>
+<p><img alt="" src="http://i66.tinypic.com/wl00w.jpg" /></p>
+<p>切换到引导选项卡，勾选无GUI引导，确定保存。</p>
+<p><img alt="" src="http://i64.tinypic.com/wj75ao.jpg" /></p>
+<p>至此，全部安装完成。</p>
+<h2 id="_3">参考文献</h2>
+<p><a href="http://tieba.baidu.com/p/3994180515">新版游侠7000 7557 UEFI安装系统教程</a></p>
+<p><a href="http://tieba.baidu.com/p/2953931895">【精品教程】史上最简单UEFI引导+GPT分区表做WIN8.1教程</a></p>
+<p><a href="http://tieba.baidu.com/p/2504699754#36527306593l">【5秒开机】UEFI模式安装win8，让开机速度快如闪电！</a></p>
+<p><a href="http://zhidao.baidu.com/link?url=Q1y1r_x8ql_Y3-D6jSk_L6HC66tmtkqUDT0dwRqssANXCUaBQKzh8ctV4sPn2IX52TBCOqPwfPX3b7oiaOj6ZTCEIjJxAYuJf1RygE5UfjW">uefi和legacy是什么意思</a></p>
+<p><a href="http://tieba.baidu.com/p/2910020357">Legacy BIOS 和 UEFI 引导模式启动的区别</a></p>
+<p><a href="http://baike.baidu.com/link?url=zTSVSl01y-Y98dE7kgQTBHCFuCB9wml_ZAt0wroa2SefG6gLxo7Vre3NmQTxLVej9bxxwQ-L-Lp2orL5xIuBfK">4K对齐</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

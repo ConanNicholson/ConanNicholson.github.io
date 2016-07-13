@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>MacOSX10.11root用户权限问题 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#MacOS">MacOS</a>&nbsp;»&nbsp;MacOSX10.11root用户权限问题</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">MacOSX10.11root用户权限问题</div>
+  <div id="content">
+  <p>OS X El Capitan中，在内核下引入了Rootless机制，以下路径：</p>
+<p><strong>/System</strong>
+<strong>/bin</strong>
+<strong>/sbin</strong>
+<strong>/usr (except /usr/local)</strong></p>
+<p>均属于Rootless范围，即使root用户无法对此目录有写和执行权限，只有Apple以及Apple授权签名的软件（包括命令行工具）可以修改此目录。</p>
+<p>要么思考你这个操作的意义之后，使用其他方式完成你的操作。比如你要改vim的配置，请放在~/.vim/中，而不是/usr/share这种全局路径要么关闭Rootless（非开发者一般不推荐，或者建议执行后再次开启）。</p>
+<p>关闭方法：
+重启，开机按住Command + R，打开终端，输入以下命令：</p>
+<div class="hlcode"><pre><span class="n">csrutil</span> <span class="n">disable</span>
+</pre></div>
+
+
+<p>此时就是完全权限了。</p>
+<h2 id="_1">参考文献</h2>
+<p><a href="http://www.zhihu.com/question/36108835/answer/65969780">Mac OS X 10.11 sudo 指令出问题了么？</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

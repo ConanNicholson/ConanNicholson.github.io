@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>为hexo添加动画效果 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Blog">Blog</a>&nbsp;»&nbsp;为hexo添加动画效果</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">为hexo添加动画效果</div>
+  <div id="content">
+  <h2 id="ps">ps:</h2>
+<p>我所示范的例子都是在<a href="https://github.com/MOxFIVE/hexo-theme-yelee">yelee</a>主题的基础上，而它修改于<a href="https://github.com/litten/hexo-theme-yilia">yilia</a>主题，所以同样适用与yilia主题。其他主题需自己找相关文件修改。</p>
+<h2 id="_1">博客加载进度条</h2>
+<p>在主页添加资源文件添加到这个文件</p>
+<p>主题目录/layout/_partial/head.ejs</p>
+<div class="hlcode"><pre><span class="x">  </span><span class="cp">&lt;%-</span> <span class="n">css</span><span class="p">(</span><span class="s1">&#39;css/style&#39;</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="x"></span>
+<span class="x"> ---在这个位置添加资源文件代码---</span>
+</pre></div>
+
+
+<p>在上面的位置添加下面插件资源文件代码。加载进度条就添加完成，更多效果可见<a href="http://www.bootcdn.cn/">BootCDN</a>下，pace这个插件的详细说明。</p>
+<div class="hlcode"><pre><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;//cdn.bootcss.com/pace/1.0.2/pace.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+
+
+<h2 id="_2">动画效果</h2>
+<p>动画效果用到这个animate这个库。在BootCDN找到资源地址，在head.ejs里添加资源文件代码。</p>
+<p>然后在</p>
+<p>主题目录/source/css/_partial/main.styl</p>
+<p>文件里，找到你要添加效果的位置添加如下代码：</p>
+<div class="hlcode"><pre><span class="o">&amp;:</span><span class="n">hover</span> <span class="p">{</span>
+    <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">animation</span><span class="o">:</span> <span class="n">rubberBand</span> <span class="mi">1</span><span class="n">s</span><span class="p">;</span>
+    <span class="nl">animation:</span> <span class="n">rubberBand</span> <span class="mi">1</span><span class="n">s</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>参数rubberBand是动画效果，你可以在<a href="http://daneden.github.io/animate.css/">animate.css</a>网站查看每种动画效果演示。</p>
+<h2 id="_3">类似下雨或下雪的动画效果</h2>
+<p>在BootCDN中找到JQuery-Snowfall这个库文件，然后在你想添加动画的地方添加动画脚本。我说一下在主页添加的方法。</p>
+<p>主题目录/layout/_partial/background.ejs </p>
+<p>这个文件中这个位置</p>
+<div class="hlcode"><pre><span class="cp">&lt;%</span> <span class="k">if</span> <span class="p">(</span><span class="n">theme</span><span class="o">.</span><span class="n">background_image</span><span class="p">){</span> <span class="cp">%&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<p>添加如下代码：</p>
+<div class="hlcode"><pre><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;//cdn.bootcss.com/JQuery-Snowfall/1.7.4/snowfall.jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+    $(document).snowfall({deviceorientation : true, image: &quot;/img/flake.png&quot;, minSize: 10, maxSize: 32, flakeCount: 60});
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<p>在你博客source根目录创建文件夹，这里假设为img，然后在文件夹下添加你喜欢的图片。</p>
+<p>图片建议添加32x32的，可以在这个<a href="http://www.easyicon.net/">easyicon</a>网站里搜索。</p>
+<p>脚本中的参数，minSize，maxSize是图片最小，最大尺寸。flakeCount是运行动画是图片的个数。</p>
+<h2 id="_4">添加网络监测</h2>
+<p>在head.ejs文件内添加如下资源代码：</p>
+<div class="hlcode"><pre><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;//cdn.bootcss.com/offline-js/0.7.14/offline.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;//cdn.bootcss.com/offline-js/0.7.14/themes/offline-language-english.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;//cdn.bootcss.com/offline-js/0.7.14/themes/offline-theme-chrome.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+
+
+<p>第三句是主体，可以到BootCDN详细里去替换自己喜欢的样式，不过个人推荐用chrome这个。</p>
+<h2 id="_5">参考文献</h2>
+<p><a href="http://www.netcan666.com/2016/01/05/Hexo%E5%8D%9A%E5%AE%A2%E7%BE%8E%E5%8C%96%E4%B9%8B%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C%E5%8A%A0%E9%9B%AA%E8%8A%B1/">Hexo博客美化之动画效果加雪花</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>CentOS没有ifcfg-eth0文件上网配置 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;CentOS没有ifcfg-eth0文件上网配置</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">CentOS没有ifcfg-eth0文件上网配置</div>
+  <div id="content">
+  <h2 id="_1">前言</h2>
+<p>不知道为什么，我安装完CentOS后，无线网卡，和网卡都驱动了，就是上不了网。之后，经过一番折腾，终于可以上网了，我把解决办法在这里写一下，方便以后记忆，和与他人分享。</p>
+<p>无线上网，前面文章已经写过。</p>
+<p>下面说一下有线上网配置。</p>
+<h2 id="_2">遇到问题</h2>
+<p>在网上找CentOS上网配置，都说配置/etc/sysconfig/network-scripts/路径下没有ifcfg-eth0文件，可是我到这个目录下发现，只有一个ifcfg-lo文件。</p>
+<p>所以，只有继续找方法。</p>
+<p>然后，知道这个文件没有的话，可以自己创建。</p>
+<p>说一下，完整过程。</p>
+<h2 id="_3">配置过程</h2>
+<p>首先，看网卡是否驱动。执行以下命令：</p>
+<div class="hlcode"><pre><span class="n">ifconfig</span> <span class="n">eth0</span>
+</pre></div>
+
+
+<p>如果有设备证明已经驱动，否则，需要驱动一下网卡，驱动方法自己可以找一下方法。</p>
+<p>创建这个文件有两种方法：</p>
+<ol>
+<li>自己配置。</li>
+<li>
+<p>系统配置。</p>
+</li>
+<li>
+<p>自己配置</p>
+</li>
+</ol>
+<p>自己配置就是手动创建ifcfg-eth0文件，然后编辑，把相应的配置写好。下面说一下具体配置。</p>
+<p>到/etc/sysconfig/network-scripts/路径下，执行以下命令：</p>
+<div class="hlcode"><pre><span class="n">vim</span> <span class="n">ifcfg</span><span class="o">-</span><span class="n">eth0</span>
+</pre></div>
+
+
+<p>添加以下配置：</p>
+<div class="hlcode"><pre><span class="n">DEVICE</span><span class="o">=</span><span class="n">eth0</span>
+<span class="n">TYPE</span><span class="o">=</span><span class="n">Ethernet</span>
+<span class="n">HWADDR</span><span class="o">=</span><span class="mo">00</span><span class="o">:</span><span class="mi">15</span><span class="o">:</span><span class="mi">5</span><span class="n">D</span><span class="o">:</span><span class="n">A1</span><span class="o">:</span><span class="mi">58</span><span class="o">:</span><span class="mo">00</span><span class="err">（根据自己的而定）</span>
+<span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">dhcp</span>
+<span class="n">DNS1</span><span class="o">=</span><span class="mf">202.205</span><span class="p">.</span><span class="n">XXX</span><span class="p">.</span><span class="n">XX</span>
+<span class="n">DNS2</span><span class="o">=</span><span class="mf">219.142</span><span class="p">.</span><span class="n">XXX</span><span class="p">.</span><span class="n">XXX</span>
+</pre></div>
+
+
+<p>这里的DNS可以不填，如果不填上不了网的话，那就填上。</p>
+<p>HWADDR可以<strong>ifconfig</strong>找到自己网卡的地址。</p>
+<p>如果驱动了网卡，<strong>ifconfig</strong>没有网卡信息，那就是没有开启网卡。执行以下命令开启网卡。</p>
+<div class="hlcode"><pre><span class="n">ifconfig</span> <span class="n">eth0</span> <span class="n">up</span>
+</pre></div>
+
+
+<p>这时候再<strong>ifconfig</strong>就应该有你的网卡信息了。</p>
+<p>然后重启以下网络服务：</p>
+<div class="hlcode"><pre><span class="n">service</span> <span class="n">network</span> <span class="n">restart</span>
+</pre></div>
+
+
+<p>大概就可以上网了。</p>
+<p>但是这样默认是不开启网卡的，所以还要配置一下。</p>
+<p>修改下列文件 </p>
+<div class="hlcode"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">loacl</span> 
+</pre></div>
+
+
+<p>最后加入 </p>
+<div class="hlcode"><pre><span class="n">ifup</span> <span class="n">eth0</span>
+</pre></div>
+
+
+<p>这样每次开机就自动启动网卡了。</p>
+<ul>
+<li>系统配置</li>
+</ul>
+<p>执行一下命令：</p>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">setup</span>
+</pre></div>
+
+
+<p>选择网络配置。</p>
+<p>选择你的网卡。</p>
+<p>这里和手动配置一样，如果不配DNS上不了网的话，就配置一下。</p>
+<p>配置完成后，重启一下网络服务，就能上网了。</p>
+<h2 id="_4">参考文献</h2>
+<p><a href="http://liulijun-cn-2011.iteye.com/blog/1177147">CentOS 6.0找不到ifcfg-eth0解决方案</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

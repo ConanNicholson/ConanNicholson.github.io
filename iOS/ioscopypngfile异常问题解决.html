@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>IOSCopyPNGFile异常问题解决 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;IOSCopyPNGFile异常问题解决</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">IOSCopyPNGFile异常问题解决</div>
+  <div id="content">
+  <p>在写代码的时候遇到Can't find xxx.png
+Command /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/copypng failed with exit code 1错误。</p>
+<p>解决办法：</p>
+<p>1.点击工程的TARGETS</p>
+<p>2.点击Build Phases</p>
+<p>3.点击Copy Bundle Resources</p>
+<p>4.看里面的图片资源文件有什么是灰色的，然后选中它，最底下有删除的按钮或者del键。删掉再编译，应该就没问题了。</p>
+<p>5.最后最好看看自己的图片文件是否有问题，图片不存在或者没有添加到编译器里，确认完成没问题再编译，运行。</p>
+<h2 id="_1">参考文献</h2>
+<p><a href="http://www.cnblogs.com/xiaopin/p/4539182.html">IOS CopyPNGFile 异常问题解决</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

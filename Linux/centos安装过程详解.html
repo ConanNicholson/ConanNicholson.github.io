@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>CentOS安装过程详解 - Conan's Wiki</title>
+        <meta name="keywords" content="学习"/>
+        <meta name="description" content="努力改变"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;CentOS安装过程详解</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">CentOS安装过程详解</div>
+  <div id="content">
+  <p>写一下图形安装CentOS的步骤，方便自己记忆，也希望能帮助别人。</p>
+<p>步骤从进入到图形安装界面开始，怎么用镜像文件安装CentOS前面文章已经说过，在这里不再赘述。</p>
+<h2 id="_1">开始安装</h2>
+<p><img alt="" src="http://i67.tinypic.com/ohn6gp.jpg" /></p>
+<p>Install or upgrade an existing system 安装或升级现有的系统 </p>
+<p>install system with basic video driver 安装过程中采用基本的显卡驱动 </p>
+<p>Rescue installed system 进入系统修复模式</p>
+<p>Boot from local drive   退出安装从硬盘启动</p>
+<p>Memory test  内存检测</p>
+<p>选择的话，先选择第一项，如果第一项不能执行安装的话，就试试第二项。</p>
+<p><img alt="" src="http://i66.tinypic.com/2eumz2a.jpg" /></p>
+<p>这里可以选择跳过。</p>
+<p><img alt="" src="http://i68.tinypic.com/s41bap.jpg" /></p>
+<p>可以选择中文，也可以选择英文，英文兼容性更好点，这个是一个比较有挑战性的选项对于英语不好的人来说。</p>
+<p><img alt="" src="http://i65.tinypic.com/dvpw12.jpg" /></p>
+<p>键盘布局选择英文。</p>
+<p><img alt="" src="http://i64.tinypic.com/bhkojt.jpg" /></p>
+<p>如果是将CentOS 6安装到本地硬盘上，选择 Basic Storage Devices，如果安装到网络存储介质如SANs上，选择 Specialized Storage Devices </p>
+<p>一般情况下选择第一项.</p>
+<p><img alt="" src="http://i64.tinypic.com/k506e8.jpg" /></p>
+<p>如果是新硬盘或硬盘上的数据已不再需要，选择 yes,discard any data，否则选择 No, keep any data </p>
+<p>一般装系统，系统盘应该不会有重要数据，所以建议选择yes,discard any data。</p>
+<p><img alt="" src="http://i68.tinypic.com/2mg06bl.jpg" /></p>
+<p>Hostname填写格式“英文名.姓”，或者保持默认。</p>
+<p>不要下一步，这里还有网络需要配置。</p>
+<p><img alt="" src="http://i65.tinypic.com/xqhv2x.jpg" /></p>
+<p>如果不配置的话，默认是不自动连接网络的，需要手动配置。</p>
+<p>时区，国内选上海，国外因自己地域选择。</p>
+<p>设置root的密码，如果提示密码弱，你可以选择无论如何都用，你也可以改复杂。学习的话，这个无所谓。真实情况下，建议根密码复杂。</p>
+<p>下面是硬盘分区。</p>
+<p><img alt="" src="http://i67.tinypic.com/s4xvlj.jpg" /></p>
+<p>这里有两种方式分区。</p>
+<ul>
+<li>自动，选择第一项。</li>
+<li>手动，选择最后一项。</li>
+</ul>
+<p>这个选择根据个人情况而定。</p>
+<p>自动分区：</p>
+<p><img alt="" src="http://i64.tinypic.com/2qt91z6.jpg" /></p>
+<p>调整分区，必须要有/home这个分区，如果没有这个分区，安装部分软件会出现不能安装的问题。</p>
+<p>自动分区的话，都会分好/home分区。</p>
+<p>下一步，格式化分区。</p>
+<p>然后，将分区更改写入硬盘。</p>
+<p><img alt="" src="http://i65.tinypic.com/2als37.jpg" /></p>
+<p>这里需要注意一下，之前我安装的时候，用U盘安装，引导位置选择错了，导致将系统引导安装到U盘上了。</p>
+<p>所以，到这步的时候，根据自己情况，如果只有一个硬盘那就默认就可以。如果有别的硬盘或者U盘就需要注意一下这里，选择系统安装的硬盘。</p>
+<p>手动分区：</p>
+<p>手动分区方案可以参考这篇文章：<a href="http://jingyan.baidu.com/article/fedf07375b0d5c35ac8977f0.html">Linux分区方案</a></p>
+<p><img alt="" src="http://i67.tinypic.com/2rdfcy8.jpg" /></p>
+<p>这一步，有两种方案：</p>
+<ol>
+<li>根据自己的需要选择安装包。</li>
+<li>最小化安装。</li>
+</ol>
+<p>第一种的话，如果当桌面系统，就选第一项或者第二项。</p>
+<p>第二种，选择“Minimal”并勾选复选框“Customize now”配置需要安装的软体。安装Linux时没有必要把所有的软体都选上，只需要安装需要的Packages就可以了。其它软体则在后续需要时再安装。系统的超强可配置性，是Linux的优点之一。</p>
+<p>这里只选择，“Base System”=&gt;“Base”(系统基础安装包) 以及 “Desktop的三个安装包”。</p>
+<p>然后就是等待系统安装完成。</p>
+<p>系统安装完成后面的设置很简单，这里就不说了。</p>
+<h2 id="_2">参考文献</h2>
+<p><a href="http://www.jb51.net/os/78318.html">CentOS 6.4 图文安装教程(有些设置大部分教程没出现过)</a></p>
+<p><a href="http://www.linuxidc.com/Linux/2012-10/71616p3.htm">光盘安装CentOS 6</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 Conan Nicholson.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
