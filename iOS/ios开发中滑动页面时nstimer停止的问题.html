@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>IOS开发中滑动页面时NSTimer停止的问题 - Conan's Wiki</title>
+    <meta name="keywords" content="学习"/>
+    <meta name="description" content="努力改变"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#iOS">iOS</a>&nbsp;&#187;&nbsp;IOS开发中滑动页面时NSTimer停止的问题
+    <span class="updated">Updated&nbsp;
+      2016-07-14 10:14
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">IOS开发中滑动页面时NSTimer停止的问题</div>
+
+  <p>开发时候遇到一种情况就是在tableView或者scrollview滑动的时候，NSTimer停止。</p>
+<p>这其实就是runloop的mode在做怪。
+runloop可以理解为cocoa下的一种消息循环机制，用来处理各种消息事件，我们在开发 的时候并不需要手动去创建一个runloop，因为框架为我们创建了一个默认的runloop,通过[NSRunloop currentRunloop]我们可以得到一个当前线程下面对应的runloop对象，不过我们需要注意的是不同的runloop之间消息的通知方式。</p>
+<p>接着上面的话题，在开启一个NSTimer实质上是在当前的runloop中注册了一个新的事件源，而当scrollView滚动的时候，当前的 MainRunLoop是处于UITrackingRunLoopMode的模式下，在这个模式下，是不会处理NSDefaultRunLoopMode 的消息(因为RunLoop Mode不一样)，要想在scrollView滚动的同时也接受其它runloop的消息，我们需要改变两者之间的runloopmode.</p>
+<p>解决方法是：</p>
+<div class="hlcode"><pre><span class="p">[[</span><span class="n">NSRunLoop</span> <span class="n">currentRunLoop</span><span class="p">]</span> <span class="n">addTimer</span><span class="o">:</span><span class="n">timer</span> <span class="n">forMode</span><span class="o">:</span><span class="n">NSRunLoopCommonModes</span><span class="p">];</span>
+</pre></div>
+
+
+<p>简单的说就是NSTimer不会开启新的进程，只是在Runloop里注册了一下，Runloop每次loop时都会检测这个timer，看是否可以触发。当Runloop在A mode，而timer注册在B mode时就无法去检测这个timer，所以需要把NSTimer也注册到A mode，这样就可以被检测到。</p>
+<h2 id="ps">PS:</h2>
+<p><strong>RunLoop中的Mode是什么?</strong></p>
+<p>Mode主要是用来指定事件在运行循环中的优先级的，分为：</p>
+<p><em>NSDefaultRunLoopMode（kCFRunLoopDefaultMode）：默认，空闲状态</em></p>
+<p><em>UITrackingRunLoopMode：ScrollView滑动时会切换到该Mode</em></p>
+<p><em>UIInitializationRunLoopMode：runloop启动时，会切换到该mode</em></p>
+<p><em>NSRunLoopCommonModes（kCFRunLoopCommonModes）：Mode集合</em></p>
+<p>苹果公开提供的Mode有两个：</p>
+<p><em>NSDefaultRunLoopMode（kCFRunLoopDefaultMode）</em></p>
+<p><em>NSRunLoopCommonModes（kCFRunLoopCommonModes）</em></p>
+<p>在编程中：如果我们把一个NSTimer对象以NSDefaultRunLoopMode（kCFRunLoopDefaultMode）添加到主运行循环中的时候,ScrollView滚动过程中会因为mode的切换，而导致NSTimer将不再被调度。当我们滚动的时候，也希望不调度，那就应该使用默认模式。但是，如果希望在滚动时，定时器也要回调，那就应该使用commonmode。</p>
+<h2 id="_1">参考文献</h2>
+<p>(IOS开发中滑动页面时NSTimer停止的问题)[http://www.cnblogs.com/6duxz/p/4633741.html]</p>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 Conan Nicholson.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-07-21 17:57:22</p>
+      </span>
+    </div>
+  </body>
+</html>

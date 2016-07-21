@@ -1,25 +1,30 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">
-        <title>GCD使用 - Conan's Wiki</title>
-        <meta name="keywords" content="学习"/>
-        <meta name="description" content="努力改变"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>GCD使用 - Conan's Wiki</title>
+    <meta name="keywords" content="学习"/>
+    <meta name="description" content="努力改变"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
 
-    <body>
-        <div id="container">
-            
+  <body>
+    <div id="container">
+      
 <div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;GCD使用</div>
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#iOS">iOS</a>&nbsp;&#187;&nbsp;GCD使用
+    <span class="updated">Updated&nbsp;
+      2016-06-02 11:05
+    </span></div>
 </div>
 <div class="clearfix"></div>
-<div id="title">GCD使用</div>
-  <div id="content">
+
+<div class="page_title">GCD使用</div>
+
   <p><strong>单例</strong></p>
 <p>dispatch_once_t必须是全局或static变量。</p>
 <div class="hlcode"><pre><span class="c1">//静态变量，保证只有一份实例，才能确保只执行一次</span>
@@ -128,15 +133,13 @@
 <p>以上所有创建context的方法都有一个必须的要求，就是都要释放内存！，无论是用free、delete还是CF的CFRelease，我们都要确保在队列不用的时候，释放context的内存，否则就会造成内存泄露。</p>
 <h2 id="_1">原文</h2>
 <p><a href="http://tutuge.me/2015/04/03/something-about-gcd/">GCD使用经验与技巧浅谈</a></p>
-</div>
-
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2016 Conan Nicholson.
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
-        
-    </body>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 Conan Nicholson.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-07-21 17:57:22</p>
+      </span>
+    </div>
+  </body>
 </html>

@@ -1,25 +1,30 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">
-        <title>oc知识点1 - Conan's Wiki</title>
-        <meta name="keywords" content="学习"/>
-        <meta name="description" content="努力改变"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>oc知识点1 - Conan's Wiki</title>
+    <meta name="keywords" content="学习"/>
+    <meta name="description" content="努力改变"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
 
-    <body>
-        <div id="container">
-            
+  <body>
+    <div id="container">
+      
 <div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#iOS">iOS</a>&nbsp;»&nbsp;oc知识点1</div>
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#iOS">iOS</a>&nbsp;&#187;&nbsp;oc知识点1
+    <span class="updated">Updated&nbsp;
+      2016-07-13 14:00
+    </span></div>
 </div>
 <div class="clearfix"></div>
-<div id="title">oc知识点1</div>
-  <div id="content">
+
+<div class="page_title">oc知识点1</div>
+
   <p><strong>OC的理解与特性</strong></p>
 <p>OC作为一门面向对象的语言，自然具有面向对象的语言特性：封装、继承、多态。它既具有静态语言的特性（如C++），又有动态语言的效率（动态绑定、动态加载等）。总体来讲，OC确实是一门不错的编程语言
 Objective-C具有相当多的动态特性，表现为三方面：动态类型（Dynamictyping）、动态绑定（Dynamicbinding）和动态加载（Dynamicloading）。动态——必须到运行时（runtime）才会做的一些事情。</p>
@@ -159,15 +164,15 @@ Objective-C具有相当多的动态特性，表现为三方面：动态类型（
 <p>进程和线程都是由操作系统所体会的程序运行的基本单元，系统利用该基本单元实现系统对应用的并发性。</p>
 <p>进程和线程的主要差别在于它们是不同的操作系统资源管理方式。进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径。线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，一个线程死掉就等于整个进程死掉，所以多进程的程序要比多线程的程序健壮，但在进程切换时，耗费资源较大，效率要差一些。</p>
 <p>但对于一些要求同时进行并且又要共享某些变量的并发操作，只能用线程，不能用进程。</p>
-</div>
-
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2016 Conan Nicholson.
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
-        
-    </body>
+<h2 id="_1">参考文献</h2>
+<p><a href="http://www.weixingon.com/s/ios+%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84">ios+比较两个数组 相关文章</a></p>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 Conan Nicholson.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-07-21 17:57:22</p>
+      </span>
+    </div>
+  </body>
 </html>
