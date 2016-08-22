@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>GPT磁盘分区详解 - Conan's Wiki</title>
+    <meta name="keywords" content="学习"/>
+    <meta name="description" content="努力改变"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#Windows">Windows</a>&nbsp;&#187;&nbsp;GPT磁盘分区详解
+    <span class="updated">Updated&nbsp;
+      2016-08-22 11:51
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">GPT磁盘分区详解</div>
+
+  <p>现在主板里用UEFI BIOS都比较普遍了，比传统BIOS先进得多。它的标准已经制定了很多年，在某些领域已经运用了很多年，但是一直好像与大家没什么关系，我们不需要了解它、熟悉它。但是，现在是大家直接面对它的时候了。因为，从此以后，新出厂的电脑，几乎是清一色的UEFI BIOS。</p>
+<p>如果要体验到UEFI BIOS的先进性，磁盘必须是GPT格式，这完全不同于传统的Mbr格式。</p>
+<p>GPT带来了很多新特性，但MBR仍然拥有最好的兼容性。GPT并不是Windows专用的新标准—— Mac OS X，Linux，及其他操作系统同样使用GPT。</p>
+<p>在使用新磁盘之前，你必须对其进行分区。MBR（Master Boot Record）和GPT（GUID Partition Table）是在磁盘上存储分区信息的两种不同方式。这些分区信息包含了分区从哪里开始的信息，这样操作系统才知道哪个扇区是属于哪个分区的，以及哪个分区是可以启动的。在磁盘上创建分区时，你必须在MBR和GPT之间做出选择。</p>
+<p><strong>MBR的局限性</strong></p>
+<p>MBR的意思是“主引导记录”，最早在1983年在IBM PC DOS 2.0中提出。
+之所以叫“主引导记录”，是因为它是存在于驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统的启动加载器和驱动器的逻辑分区信息。所谓启动加载器，是一小段代码，用于加载驱动器上其他分区上更大的加载器。如果你安装了Windows，Windows启动加载器的初始信息就放在这个区域里——如果MBR的信息被覆盖导致Windows不能启动，你就需要使用Windows的MBR修复功能来使其恢复正常。如果你安装了Linux，则位于MBR里的通常会是GRUB加载器。
+MBR支持最大2TB磁盘，它无法处理大于2TB容量的磁盘。MBR还只支持最多4个主分区——如果你想要更多分区，你需要创建所谓“扩展分区”，并在其中创建逻辑分区。
+MBR已经成为磁盘分区和启动的工业标准。</p>
+<p><strong>GPT的优势</strong></p>
+<p>GPT意为GUID分区表。（GUID意为全局唯一标识符）。这是一个正逐渐取代MBR的新标准。它和UEFI相辅相成——UEFI用于取代老旧的BIOS，而GPT则取代老旧的MBR。之所以叫作“GUID分区表”，是因为你的驱动器上的每个分区都有一个全局唯一的标识符（globally unique identifier，GUID）——这是一个随机生成的字符串，可以保证为地球上的每一个GPT分区都分配完全唯一的标识符。
+这个标准没有MBR的那些限制。磁盘驱动器容量可以大得多，大到操作系统和文件系统都没法支持。它同时还支持几乎无限个分区数量，限制只在于操作系统——Windows支持最多128个GPT分区，而且你还不需要创建扩展分区。
+在MBR磁盘上，分区和启动信息是保存在一起的。如果这部分数据被覆盖或破坏，事情就麻烦了。相对的，GPT在整个磁盘上保存多个这部分信息的副本，因此它更为健壮，并可以恢复被破坏的这部分信息。GPT还为这些信息保存了循环冗余校验码（CRC）以保证其完整和正确——如果数据被破坏，GPT会发觉这些破坏，并从磁盘上的其他地方进行恢复。而MBR则对这些问题无能为力——只有在问题出现后，你才会发现计算机无法启动，或者磁盘分区都不翼而飞了。</p>
+<p>兼容性
+使用GPT的驱动器会包含一个“保护性MBR”。这种MBR会认为GPT驱动器有一个占据了整个磁盘的分区。如果你使用老实的MBR磁盘工具对GPT磁盘进行管理，你只会看见一个占据整个磁盘的分区。这种保护性MBR保证老式磁盘工具不会把GPT磁盘当作没有分区的空磁盘处理而用MBR覆盖掉本来存在的GPT信息。</p>
+<p>在基于UEFI的计算机系统上，所有64位版本的Windows 10、8.1、8、7和Vista，以及其对应的服务器版本，都只能从GPT分区启动。所有版本的Windows 10、8.1、8、7和Vista都可以读取和使用GPT分区。
+其他现代操作系统也同样支持GPT。Linux内建了GPT支持。苹果公司基于Intel芯片的MAC电脑也不再使用自家的APT（Apple Partition Table），转而使用GPT。</p>
+<p>我们推荐你使用GPT对磁盘进行分区。它更先进，更健壮，所有计算机系统都在向其转移。如果你需要保持对旧系统的兼容性——比如在使用传统BIOS的计算机上启动Windows，你需要使用MBR。</p>
+<p>需要说明的是，GPT磁盘不兼容32位操作系统，只能安装64位的。微软从 Vista Sp1 （注意是带有Sp1的）开始支持UEFI，所以，从那以后的微软操作系统，包括 Vista sp1、windows2008、2008 R2、windows7、windows8、windows2012，都支持。</p>
+<p>利用diskpart分区参考：</p>
+<p><a href="http://wiki.conannic.com/Windows/uefi%E6%A8%A1%E5%BC%8F%E5%AE%89%E8%A3%85win8.1.html">UEFI模式安装win8.1</a></p>
+<p>任何一块 GPT 磁盘上都有一个 MSR 分区，大小随硬盘总容量而定，一般不超过128MB。这个分区不能被用户直接使用，它的用途是防止将一块 GPT 磁盘接到老系统（如XP）中，被当作未格式化的空硬盘而继续操作（例如重新格式化），导致数据丢失。 GPT 磁盘上有了这个分区，当把它接入 XP 等老系统中，会提示无法识别的磁盘，也无法进一步操作。</p>
+<p>GPT 磁盘只有做系统盘的时候才会有 EFI 分区，这个分区是操作系统的引导分区，与在 MBR 磁盘上安装 Win7(8) 生成的那个100MB 隐藏分区用途相同。</p>
+<h2 id="_1">参考文献</h2>
+<p><a href="http://www.nc1234.com/html/caozuojiqiao/2013/0711/89.html">使用Diskpart建立GPT磁盘分区图文教程</a></p>
+<p><a href="http://fyzx.ankang.gov.cn/Article/Class26/201408/1484.html">对硬盘进行分区时，GPT和MBR有什么区别？</a></p>
+<p><a href="http://wenku.baidu.com/link?url=lr24O6keB-Yq_vcH_1q2iG3PiHoQ46occ0fYrxZQpzQCvEMwcb5meeuRa-bA72gkgD3o_qRELPQWv1vuSBRYpjFswDDUzhgWSGD_Sj8NUzO">解释MBR分区,GPT分区,EFI分区,MSR分区是什么</a></p>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 Conan Nicholson.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-08-22 14:11:39</p>
+      </span>
+    </div>
+  </body>
+</html>
