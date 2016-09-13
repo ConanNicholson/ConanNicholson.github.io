@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>collectView添加headerview - Conan's Wiki</title>
+    <meta name="keywords" content="学习"/>
+    <meta name="description" content="努力改变"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#iOS">iOS</a>&nbsp;&#187;&nbsp;collectView添加headerview
+    <span class="updated">Updated&nbsp;
+      2016-09-13 16:57
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">collectView添加headerview</div>
+
+  <p>首先注册UICollectionReusableView</p>
+<div class="hlcode"><pre><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="n">registerClass</span><span class="o">:</span><span class="p">[</span><span class="n">UICollectionReusableView</span> <span class="n">class</span><span class="p">]</span> <span class="n">forSupplementaryViewOfKind</span><span class="o">:</span><span class="n">UICollectionElementKindSectionHeader</span> <span class="n">withReuseIdentifier</span><span class="o">:</span><span class="n">kHeaderIdentifier</span><span class="p">];</span>
+</pre></div>
+
+
+<p>给headerview高度</p>
+<div class="hlcode"><pre><span class="o">-</span><span class="p">(</span><span class="n">CGSize</span><span class="p">)</span><span class="n">collectionView</span><span class="o">:</span><span class="p">(</span><span class="n">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="n">collectionView</span> <span class="n">layout</span><span class="o">:</span><span class="p">(</span><span class="n">UICollectionViewLayout</span> <span class="o">*</span><span class="p">)</span><span class="n">collectionViewLayout</span> <span class="n">referenceSizeForHeaderInSection</span><span class="o">:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">section</span><span class="p">{</span>
+    <span class="n">CGSize</span> <span class="n">size</span> <span class="o">=</span> <span class="n">CGSizeZero</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">section</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">CGSizeMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_advViewHeight</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">size</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">size</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>布局headview</p>
+<div class="hlcode"><pre><span class="k">-</span> <span class="p">(</span><span class="n">UICollectionReusableView</span> <span class="o">*</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="n">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">viewForSupplementaryElementOfKind:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">kind</span> <span class="nf">atIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span> <span class="p">{</span>
+    <span class="n">UICollectionReusableView</span> <span class="o">*</span><span class="n">headerView</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">indexPath</span><span class="p">.</span><span class="n">section</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">kind</span> <span class="o">==</span> <span class="n">UICollectionElementKindSectionHeader</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">headerView</span> <span class="o">=</span> <span class="p">[</span><span class="n">collectionView</span> <span class="n">dequeueReusableSupplementaryViewOfKind</span><span class="o">:</span><span class="n">UICollectionElementKindSectionHeader</span> <span class="n">withReuseIdentifier</span><span class="o">:</span><span class="n">kHeaderIdentifier</span> <span class="n">forIndexPath</span><span class="o">:</span><span class="n">indexPath</span><span class="p">];</span>
+            <span class="n">headerView</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">whiteColor</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">headerView</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>footerview同理。</p>
+<h3 id="_1">参考文献</h3>
+<p><a href="http://blog.csdn.net/sinat_20559947/article/details/52218329">CollectionView设置UICollectionReusableView头尾视图</a></p>
+<p><a href="https://my.oschina.net/zboy/blog/221525">怎样在UICollectionView中添加Header和footer</a></p>
+<p><a href="http://www.cocoachina.com/bbs/read.php?tid-256157.html">如何纯代码给UICollectionView添加HeaderView</a></p>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 Conan Nicholson.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-09-13 17:03:37</p>
+      </span>
+    </div>
+  </body>
+</html>
