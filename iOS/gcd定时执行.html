@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>GCD定时执行 - Conan's Wiki</title>
+    <meta name="keywords" content="学习"/>
+    <meta name="description" content="努力改变"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#iOS">iOS</a>&nbsp;&#187;&nbsp;GCD定时执行
+    <span class="updated">Updated&nbsp;
+      2016-09-20 15:49
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">GCD定时执行</div>
+
+  <p>开始</p>
+<div class="hlcode"><pre><span class="n">NSTimeInterval</span> <span class="n">period</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span> <span class="c1">//设置时间间隔</span>
+    <span class="kt">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="n">DISPATCH_QUEUE_PRIORITY_DEFAULT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span><span class="c1">//设置线程</span>
+    <span class="n">_timer</span> <span class="o">=</span> <span class="n">dispatch_source_create</span><span class="p">(</span><span class="n">DISPATCH_SOURCE_TYPE_TIMER</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">queue</span><span class="p">);</span><span class="c1">//设置计时器</span>
+    <span class="n">dispatch_source_set_timer</span><span class="p">(</span><span class="n">_timer</span><span class="p">,</span> <span class="n">dispatch_walltime</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">period</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">//每秒执行</span>
+    <span class="n">dispatch_source_set_event_handler</span><span class="p">(</span><span class="n">_timer</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="c1">//在这里执行事件</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;test&quot;</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="n">dispatch_resume</span><span class="p">(</span><span class="n">_timer</span><span class="p">);</span>
+</pre></div>
+
+
+<p>停止</p>
+<div class="hlcode"><pre><span class="n">dispatch_source_cancel</span><span class="p">(</span><span class="n">_timer</span><span class="p">);</span>
+<span class="n">_timer</span> <span class="o">=</span> <span class="n">nil</span><span class="p">;</span>
+</pre></div>
+
+
+<p>暂停</p>
+<div class="hlcode"><pre><span class="n">dispatch_suspend</span><span class="p">(</span><span class="n">_timer</span><span class="p">);</span>
+</pre></div>
+
+
+<p>恢复</p>
+<div class="hlcode"><pre><span class="n">dispatch_resume</span><span class="p">(</span><span class="n">_timer</span><span class="p">);</span>
+</pre></div>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 Conan Nicholson.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-10-10 09:37:01</p>
+      </span>
+    </div>
+  </body>
+</html>
