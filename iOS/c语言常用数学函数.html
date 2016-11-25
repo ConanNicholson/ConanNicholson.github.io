@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>c语言常用数学函数 - Conan's Wiki</title>
+    <meta name="keywords" content="Conan's Wiki"/>
+    <meta name="description" content="知识储备"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#iOS">iOS</a>&nbsp;&#187;&nbsp;c语言常用数学函数
+    <span class="updated">Updated&nbsp;
+      2016-11-22 15:56
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">c语言常用数学函数</div>
+
+  <p>1.三角函数</p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">sin</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span><span class="err">正弦</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">cos</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span><span class="err">余弦</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">tan</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span><span class="err">正切</span> 
+</pre></div>
+
+
+<p>2.反三角函数 </p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">asin</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> <span class="err">结果介于</span><span class="p">[</span><span class="o">-</span><span class="n">PI</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">PI</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">acos</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> <span class="err">结果介于</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">PI</span><span class="p">]</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">atan</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> <span class="err">反正切</span><span class="p">(</span><span class="err">主值</span><span class="p">),</span> <span class="err">结果介于</span><span class="p">[</span><span class="o">-</span><span class="n">PI</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">PI</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">atan2</span> <span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="kt">double</span><span class="p">);</span> <span class="err">反正切</span><span class="p">(</span><span class="err">整圆值</span><span class="p">),</span> <span class="err">结果介于</span><span class="p">[</span><span class="o">-</span><span class="n">PI</span><span class="p">,</span> <span class="n">PI</span><span class="p">]</span> 
+</pre></div>
+
+
+<p>3.双曲三角函数 </p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">sinh</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">cosh</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">tanh</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> 
+</pre></div>
+
+
+<p>4.指数与对数 </p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">exp</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span><span class="err">求取自然数</span><span class="n">e</span><span class="err">的幂</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">sqrt</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span><span class="err">开平方</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">log</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> <span class="err">以</span><span class="n">e</span><span class="err">为底的对数</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">log10</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span><span class="err">以</span><span class="mi">10</span><span class="err">为底的对数</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="n">pow</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="err">）</span><span class="p">;</span><span class="err">计算以</span><span class="n">x</span><span class="err">为底数的</span><span class="n">y</span><span class="err">次幂</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">float</span> <span class="nf">powf</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">);</span> <span class="err">功能与</span><span class="n">pow</span><span class="err">一致，只是输入与输出皆为浮点数</span> 
+</pre></div>
+
+
+<p>5.取整 </p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">ceil</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> <span class="err">取上整</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">floor</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span> <span class="err">取下整</span> 
+</pre></div>
+
+
+<p>6 .绝对值 </p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">fabs</span> <span class="p">(</span><span class="kt">double</span><span class="p">);</span><span class="err">求绝对值</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">cabs</span><span class="p">(</span><span class="k">struct</span> <span class="n">complex</span> <span class="n">znum</span><span class="p">)</span> <span class="p">;</span><span class="err">求复数的绝对值</span> 
+</pre></div>
+
+
+<p>7.标准化浮点数 </p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">frexp</span> <span class="p">(</span><span class="kt">double</span> <span class="n">f</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span> <span class="err">标准化浮点数</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="o">^</span><span class="n">p</span><span class="p">,</span> <span class="err">已知</span><span class="n">f</span><span class="err">求</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span> <span class="p">(</span> <span class="n">x</span><span class="err">介于</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="p">)</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">ldexp</span> <span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">);</span> <span class="err">与</span><span class="n">frexp</span><span class="err">相反</span><span class="p">,</span> <span class="err">已知</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="err">求</span><span class="n">f</span> 
+</pre></div>
+
+
+<p>8.取整与取余 </p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">modf</span> <span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span><span class="p">);</span> <span class="err">将参数的整数部分通过指针回传</span><span class="p">,</span> <span class="err">返回小数部分</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">fmod</span> <span class="p">(</span><span class="kt">double</span><span class="p">,</span> <span class="kt">double</span><span class="p">);</span> <span class="err">返回两参数相除的余数</span> 
+</pre></div>
+
+
+<p>9.其他 </p>
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">hypot</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">);</span><span class="err">已知直角三角形两个直角边长度，求斜边长度</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">ldexp</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">exponent</span><span class="p">);</span><span class="err">计算</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="err">的</span><span class="n">exponent</span><span class="err">次幂</span><span class="p">)</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="kt">double</span> <span class="nf">poly</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">degree</span><span class="p">,</span> <span class="kt">double</span> <span class="n">coeffs</span> <span class="p">[]</span> <span class="p">);</span><span class="err">计算多项式</span> 
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="n">nt</span> <span class="nf">matherr</span><span class="p">(</span><span class="k">struct</span> <span class="n">exception</span> <span class="o">*</span><span class="n">e</span><span class="p">);</span><span class="err">数学错误计算处理程序</span>
+</pre></div>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 Conan.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-11-25 09:50:37</p>
+      </span>
+    </div>
+  </body>
+</html>
