@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>自定义导航栏去掉两边距离方法 - Conan's Wiki</title>
+    <meta name="keywords" content="Conan's Wiki"/>
+    <meta name="description" content="知识储备"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#iOS">iOS</a>&nbsp;&#187;&nbsp;自定义导航栏去掉两边距离方法
+    <span class="updated">Updated&nbsp;
+      2016-11-28 10:12
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">自定义导航栏去掉两边距离方法</div>
+
+  <p>新建BarButtonItem为固定距离</p>
+<div class="hlcode"><pre><span class="n">UIBarButtonItem</span> <span class="o">*</span><span class="n">negativeSeperator</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIBarButtonItem</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithBarButtonSystemItem</span><span class="o">:</span><span class="n">UIBarButtonSystemItemFixedSpace</span> <span class="n">target</span><span class="o">:</span><span class="nb">nil</span> <span class="n">action</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+</pre></div>
+
+
+<p>两边的空出来的距离为负数。</p>
+<div class="hlcode"><pre><span class="n">CGFloat</span> <span class="n">toRightEdge</span> <span class="o">=</span> <span class="mf">16.f</span><span class="p">;</span>
+<span class="n">negativeSeperator</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="o">-</span><span class="n">toRightEdge</span><span class="p">;</span>
+</pre></div>
+
+
+<p>然后以数组的形式加到左右BarButtonItems上。</p>
+<div class="hlcode"><pre><span class="n">self</span><span class="p">.</span><span class="n">navigationItem</span><span class="p">.</span><span class="n">rightBarButtonItems</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span><span class="n">negativeSeperator</span><span class="p">,[[</span><span class="n">UIBarButtonItem</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithCustomView</span><span class="o">:</span><span class="n">_navListView</span><span class="p">]];</span>
+</pre></div>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 Conan.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-11-28 10:16:12</p>
+      </span>
+    </div>
+  </body>
+</html>
